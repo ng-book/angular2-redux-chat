@@ -25,9 +25,11 @@ var npmRoot = __dirname + "/node_modules";
 var appDir = __dirname + "/app";
 
 var entry = ["./app/ts/app.ts"]
+var minimalEntry = ['./minimal/app.ts']
  
 if (isDevServer) {
   entry.unshift("webpack-dev-server/client?http://"+reloadHost+":8080");
+  minimalEntry.unshift("webpack-dev-server/client?http://"+reloadHost+":8080");
 }
  
 function makeConfig(options) {
@@ -42,6 +44,7 @@ function makeConfig(options) {
     entry: {
       vendor: './app/ts/vendor.ts',
       app: entry,
+      minimal: minimalEntry,
     },
     stats: {
       colors: true,
@@ -70,6 +73,7 @@ function makeConfig(options) {
       // new webpack.optimize.CommonsChunkPlugin('core.js'),
       new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js', minChunks: Infinity }),
       new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js', minChunks: 2, chunks: ['app', 'vendor'] }),
+      new webpack.optimize.CommonsChunkPlugin({ name: 'minimal', filename: 'minimal.js', minChunks: Infinity, chunks: ['minimal'] }),
       // new webpack.optimize.CommonsChunkPlugin({
       //   name: 'angular',
       //   minChunks: Infinity,
@@ -81,7 +85,12 @@ function makeConfig(options) {
         ENV: JSON.stringify(options.env)
       }),
       new HtmlWebpackPlugin({
+        filename: 'index.html',
         template: path.join(appDir, "index.html"),
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'minimal.html',
+        template: path.join(__dirname, "minimal", "index.html"),
       }),
       new ReloadPlugin( isDevServer ? 'localhost' : ''),
       new WebpackNotifierPlugin({

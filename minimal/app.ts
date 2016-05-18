@@ -11,54 +11,27 @@ import {
 } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
-/*
- * Components
- */
-// import {ChatNavBar} from './components/ChatNavBar';
-// import {ChatThreads} from './components/ChatThreads';
-// import {ChatWindow} from './components/ChatWindow';
-
-/*
- * Injectables
- */
-// import { servicesInjectables } from './services/services';
-// import {utilInjectables} from './util/util';
-
-/*
- * Services
- */
-// import {
-//   MessagesService,
-//   ThreadsService,
-//   UserService
-// } from './services/services';
-
-// import {ChatExampleData} from './ChatExampleData';
-
 import {provideStore} from '@ngrx/store';
-import {messages} from './reducers/messages';
+// import {messages} from './reducers/messages';
 
-/*
- * Webpack
- */
-require('../css/styles.scss');
+console.log("minimal app loaded")
 
 @Component({
-  selector: 'chat-app',
+  selector: 'minimal-ngrx-app',
   directives: [],
   template: `
   <div>
-    hi
+    hi minimal
   </div>
   `
 })
-class ChatApp {
+class MinimalApp {
   constructor() {
   }
 }
 
-bootstrap(ChatApp, [
-  provideStore({messages})
+bootstrap(MinimalApp, [
+  // provideStore({messages})
 ])
 .catch(err => console.error(err));
 
@@ -66,7 +39,7 @@ bootstrap(ChatApp, [
 // You can ignore these 'require' statements. The code will work without them.
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
-require('./models/messages');
+require('../app/ts/vendor');
 // require('./services/services');
 // require('./ChatExampleData');
 // require('./util/util');

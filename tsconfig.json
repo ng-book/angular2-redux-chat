@@ -10,6 +10,8 @@
   },
 
   "filesGlob": [
+    "typings/custom/normalizr.d.ts",
+    "node_modules/immutable/dist/immutable.d.ts",
     "./app/**/*.ts",
     "./test/**/*.ts",
     "!./node_modules/**/*.ts"
