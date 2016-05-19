@@ -10,18 +10,18 @@ import {
   Component
 } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-
-import {provideStore} from '@ngrx/store';
-// import {messages} from './reducers/messages';
-
-console.log("minimal app loaded")
+import MinimalCounterApp from './counter';
 
 @Component({
   selector: 'minimal-ngrx-app',
-  directives: [],
+  directives: [
+    MinimalCounterApp
+  ],
   template: `
   <div>
     hi minimal
+    <minimal-counter-app>
+    </minimal-counter-app>
   </div>
   `
 })
@@ -31,7 +31,7 @@ class MinimalApp {
 }
 
 bootstrap(MinimalApp, [
-  // provideStore({messages})
+  // provideStore({messages: Messages})
 ])
 .catch(err => console.error(err));
 
