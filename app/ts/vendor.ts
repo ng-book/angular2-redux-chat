@@ -1,5 +1,3 @@
-console.log("vendor loaded")
-
 // Polyfills
 import 'core-js/es6';
 import 'core-js/es6';

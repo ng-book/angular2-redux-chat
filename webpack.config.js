@@ -70,15 +70,9 @@ function makeConfig(options) {
     },
     plugins: [
       new webpack.IgnorePlugin(/spec\.js$/),
-      // new webpack.optimize.CommonsChunkPlugin('core.js'),
       new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js', minChunks: Infinity }),
       new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js', minChunks: 2, chunks: ['app', 'vendor'] }),
       new webpack.optimize.CommonsChunkPlugin({ name: 'minimal', filename: 'minimal.js', minChunks: Infinity, chunks: ['minimal'] }),
-      // new webpack.optimize.CommonsChunkPlugin({
-      //   name: 'angular',
-      //   minChunks: Infinity,
-      //   filename: 'angular.js'
-      // }),
       new ExtractTextPlugin("styles.css"),
       new webpack.DefinePlugin({
         VERSION: JSON.stringify(version),
