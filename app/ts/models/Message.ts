@@ -2,9 +2,9 @@ export class Message {
   id: string;
   sentAt: Date;
   isRead: boolean;
-  author: User;
+  // author: User;
   text: string;
-  thread: Thread;
+  // thread: Thread;
 
   // constructor(obj?: any) {
   //   this.id              = obj && obj.id              || uuid();

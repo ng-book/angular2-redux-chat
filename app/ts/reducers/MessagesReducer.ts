@@ -16,7 +16,7 @@ const initialState: MessagesState = {
   entities: {}
 };
 
-export default function(state = initialState, action: Action): MessagesState {
+export const MessagesReducer = function(state = initialState, action: Action): MessagesState {
   switch (action.type) {
     default: {
       return state;

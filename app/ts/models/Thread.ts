@@ -1,6 +1,6 @@
 export class Thread {
   id: string;
-  lastMessage: Message;
+  // lastMessage: Message;
   name: string;
   avatarSrc: string;
 

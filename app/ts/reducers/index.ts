@@ -10,10 +10,10 @@ import {
 
 export interface AppState {
   messages: MessagesState;
-  threads: ThreadsState;
+  // threads: ThreadsState;
 }
 
 export default compose(storeLogger(), combineReducers)({
   messages: MessagesReducer,
-  threads: ThreadsReducer
+  // threads: ThreadsReducer
 });
