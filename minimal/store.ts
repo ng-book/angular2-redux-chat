@@ -1,4 +1,3 @@
-/// <reference path="../../../typings/main.d.ts"/>
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/scan';

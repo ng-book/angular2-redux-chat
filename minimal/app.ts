@@ -19,7 +19,6 @@ import MinimalCounterApp from './counter';
   ],
   template: `
   <div>
-    hi minimal
     <minimal-counter-app>
     </minimal-counter-app>
   </div>
@@ -40,6 +39,7 @@ bootstrap(MinimalApp, [
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
 require('../app/ts/vendor');
+require('./counter');
 // require('./services/services');
 // require('./ChatExampleData');
 // require('./util/util');
