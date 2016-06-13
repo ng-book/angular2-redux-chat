@@ -27,7 +27,7 @@
     "base64id": "0.1.0",
     "core-js": "^2.2.2",
     "immutable": "^3.8.1",
-    "lodash": "3.10.1",
+    "lodash": "^3.10.1",
     "moment": "2.10.6",
     "ngrx-store-logger": "^0.1.5",
     "normalizr": "1.4.1",

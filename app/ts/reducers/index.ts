@@ -39,3 +39,7 @@ export function getThreadsState() {
 export function getThreadsEntities() {
   return compose(threads.getThreadsEntities(), getThreadsState());
 }
+
+export function getAllThreads() {
+  return compose(threads.getAllThreads(), getThreadsState());
+}

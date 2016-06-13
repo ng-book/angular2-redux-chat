@@ -46,3 +46,10 @@ export function getThreadsEntities() {
   return (state$: Observable<ThreadsState>) => state$
     .select(s => s.entities);
 };
+
+export function getAllThreads() {
+  return (state$: Observable<ThreadsState>) => state$
+    .let(getThreadsEntities())
+    .map(entities => Object.keys(entities)
+                           .map((threadId) => entities[threadId]));
+}

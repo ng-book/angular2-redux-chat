@@ -16,22 +16,21 @@ import {
 } from '../models';
 import {
   AppState,
-  getThreadsEntities
+  getAllThreads
 } from '../reducers';
+import ChatThread from '../components/ChatThread';
 
 @Component({
   selector: 'chat-threads',
+  directives: [ChatThread],
   template: `
   <!-- conversations -->
   <div class="row">
     <div class="conversation-wrap">
-
-      <div
+      <chat-thread
            *ngFor="let thread of threads$ | async"
-           >
-           hi
-      </div>
-
+           [thread]="thread">
+      </chat-thread>
     </div>
   </div>
   `
@@ -39,10 +38,10 @@ import {
 
 // TODO - this should be a container and the Thread can be a component
 export default class ChatThreads {
-  threads$: Observable<{ [id: string]: Thread }>
+  threads$: Observable<Thread[]>
 
   constructor(private store: Store<AppState>) {
     // https://gist.github.com/btroncone/d6cf141d6f2c00dc6b35#let
-    this.threads$ = store.let(getThreadsEntities());
+    this.threads$ = store.let(getAllThreads());
   }
 }

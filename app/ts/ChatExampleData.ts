@@ -25,9 +25,23 @@ const ladycap: User = {
   avatarSrc: require('images/avatars/female-avatar-2.png')
 };
 
-// let echo: User    = new User('Echo Bot', require('images/avatars/male-avatar-1.png'));
-// let rev: User     = new User('Reverse Bot', require('images/avatars/female-avatar-4.png'));
-// let wait: User    = new User('Waiting Bot', require('images/avatars/male-avatar-2.png'));
+const echo: User = {
+  id: uuid(),
+  name: 'Echo Bot',
+  avatarSrc: require('images/avatars/male-avatar-1.png')
+};
+
+const rev: User = {
+  id: uuid(),
+  name: 'Reverse Bot',
+  avatarSrc: require('images/avatars/female-avatar-4.png')
+};
+
+let wait: User = {
+  id: uuid(),
+  name: 'Waiting Bot',
+  avatarSrc: require('images/avatars/male-avatar-2.png')
+};
 
 let tLadycap: Thread = {
   id: 'tLadycap',
@@ -35,9 +49,23 @@ let tLadycap: Thread = {
   avatarSrc: ladycap.avatarSrc
 };
 
-// let tEcho: Thread    = new Thread('tEcho', echo.name, echo.avatarSrc);
-// let tRev: Thread     = new Thread('tRev', rev.name, rev.avatarSrc);
-// let tWait: Thread    = new Thread('tWait', wait.name, wait.avatarSrc);
+let tEcho: Thread = {
+  id: 'tEcho',
+  name: echo.name,
+  avatarSrc: echo.avatarSrc
+};
+
+let tRev: Thread = {
+  id: 'tRev',
+  name: rev.name,
+  avatarSrc: rev.avatarSrc
+};
+
+let tWait: Thread = {
+  id: 'tWait',
+  name: wait.name,
+  avatarSrc: wait.avatarSrc
+};
 
 export default function ChatExampleData(store: Store<AppState>) {
   const threadActions = new ThreadActions();
@@ -45,6 +73,9 @@ export default function ChatExampleData(store: Store<AppState>) {
 
   // create a new thread
   store.dispatch(threadActions.add(tLadycap));
+  store.dispatch(threadActions.add(tEcho));
+  // store.dispatch(threadActions.add(tRev));
+  // store.dispatch(threadActions.add(tWait));
 
   // store.dispatch(messageActions.sendMessageOnThread(tLadycap, {
   //   author: me,
