@@ -1,9 +1,12 @@
 import { MessageActions } from './MessageActions';
+import { ThreadActions } from './ThreadActions';
 
 export {
-  MessageActions
+  MessageActions,
+  ThreadActions
 };
 
 export default [
-  MessageActions
+  MessageActions,
+  ThreadActions
 ];

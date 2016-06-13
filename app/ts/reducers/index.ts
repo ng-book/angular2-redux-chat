@@ -8,12 +8,17 @@ import {
   MessagesReducer
 } from './MessagesReducer.ts';
 
+import {
+  ThreadsState,
+  ThreadsReducer
+} from './ThreadsReducer.ts';
+
 export interface AppState {
   messages: MessagesState;
-  // threads: ThreadsState;
+  threads: ThreadsState;
 }
 
 export default compose(storeLogger(), combineReducers)({
   messages: MessagesReducer,
-  // threads: ThreadsReducer
+  threads: ThreadsReducer
 });

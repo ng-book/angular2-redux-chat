@@ -10,6 +10,7 @@ import {
   Component
 } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
+import { Store, provideStore } from '@ngrx/store';
 
 /*
  * Components
@@ -19,24 +20,9 @@ import ChatPage from './pages/ChatPage';
 // import {ChatThreads} from './components/ChatThreads';
 // import {ChatWindow} from './components/ChatWindow';
 
-/*
- * Injectables
- */
-// import { servicesInjectables } from './services/services';
-// import {utilInjectables} from './util/util';
+import ChatExampleData from './ChatExampleData';
+import reducer, { AppState } from './reducers';
 
-/*
- * Services
- */
-// import {
-//   MessagesService,
-//   ThreadsService,
-//   UserService
-// } from './services/services';
-
-// import {ChatExampleData} from './ChatExampleData';
-
-import { provideStore } from '@ngrx/store';
 // import { messages } from './reducers/messages';
 
 /*
@@ -54,12 +40,13 @@ require('../css/styles.scss');
   `
 })
 class ChatApp {
-  constructor() {
+  constructor(private store: Store<AppState>) {
+    ChatExampleData(store);
   }
 }
 
 bootstrap(ChatApp, [
-  provideStore({ })
+  provideStore(reducer)
 ])
 .catch(err => console.error(err));
 
@@ -70,3 +57,5 @@ bootstrap(ChatApp, [
 require('./pages/ChatPage');
 require('./reducers');
 require('./models');
+require('./actions');
+require('./ChatExampleData');

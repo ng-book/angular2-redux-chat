@@ -1,11 +1,10 @@
-export class Message {
+export interface Message {
   id: string;
   sentAt: Date;
   isRead: boolean;
   // author: User;
   text: string;
   // thread: Thread;
-
   // constructor(obj?: any) {
   //   this.id              = obj && obj.id              || uuid();
   //   this.isRead          = obj && obj.isRead          || false;

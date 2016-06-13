@@ -1,4 +1,4 @@
-export class Thread {
+export interface Thread {
   id: string;
   // lastMessage: Message;
   name: string;
