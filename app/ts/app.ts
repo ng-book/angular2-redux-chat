@@ -2,7 +2,7 @@
  * Copyright 2016, Fullstack.io, LLC.
  *
  * This source code is licensed under the MIT-style license found in the
- * LICENSE file in the root directory of this source tree. 
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
@@ -14,6 +14,7 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 /*
  * Components
  */
+import ChatPage from './pages/ChatPage';
 // import {ChatNavBar} from './components/ChatNavBar';
 // import {ChatThreads} from './components/ChatThreads';
 // import {ChatWindow} from './components/ChatWindow';
@@ -35,8 +36,8 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 
 // import {ChatExampleData} from './ChatExampleData';
 
-import {provideStore} from '@ngrx/store';
-import {messages} from './reducers/messages';
+import { provideStore } from '@ngrx/store';
+// import { messages } from './reducers/messages';
 
 /*
  * Webpack
@@ -45,10 +46,10 @@ require('../css/styles.scss');
 
 @Component({
   selector: 'chat-app',
-  directives: [],
+  directives: [ChatPage],
   template: `
   <div>
-    hi
+    <chat-page></chat-page>
   </div>
   `
 })
@@ -58,7 +59,7 @@ class ChatApp {
 }
 
 bootstrap(ChatApp, [
-  provideStore({messages})
+  provideStore({ })
 ])
 .catch(err => console.error(err));
 
@@ -66,3 +67,5 @@ bootstrap(ChatApp, [
 // You can ignore these 'require' statements. The code will work without them.
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
+require('./pages/ChatPage');
+require('./reducers');

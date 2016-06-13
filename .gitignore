@@ -34,6 +34,8 @@ node_modules
 .webpack.json
 
 
+.DS_Store
+
 app/ts/ChatExampleData.js
 app/ts/app.js
 app/ts/components/ChatNavBar.js
