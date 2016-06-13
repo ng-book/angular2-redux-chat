@@ -41,14 +41,13 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 // return new Store<any>(dispatcher, backend, initialState);
 
 // reducer
-var initialState: Number = 0;
+var initialState: number = 0;
 
 export const counterReducer: Reducer<any> = 
   (state = initialState, action: Action) => {
     switch (action.type) {
     case 'INCREMENT':
       return state + 1;
-      break;
     default:
       return state;
     }

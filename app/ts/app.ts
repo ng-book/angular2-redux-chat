@@ -66,11 +66,3 @@ bootstrap(ChatApp, [
 // You can ignore these 'require' statements. The code will work without them.
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
-require('./models/messages');
-// require('./services/services');
-// require('./ChatExampleData');
-// require('./util/util');
-// require('./components/ChatNavBar');
-// require('./components/ChatWindow');
-// require('./components/ChatThreads');
-
