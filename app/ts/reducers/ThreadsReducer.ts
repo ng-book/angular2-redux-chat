@@ -22,8 +22,27 @@ const initialState: ThreadsState = {
 export const ThreadsReducer =
   function(state = initialState, action: Action): ThreadsState {
   switch (action.type) {
+    case ThreadActions.ADD_THREAD: {
+      const thread: Thread = action.payload;
+
+      if (state.ids.includes(thread.id)) {
+        return state;
+      }
+
+      return {
+        ids: [ ...state.ids, thread.id ],
+        entities: Object.assign({}, state.entities, {
+          [thread.id]: thread
+        })
+      };
+    }
     default: {
       return state;
     }
   }
 }
+
+export function getThreadsEntities() {
+  return (state$: Observable<ThreadsState>) => state$
+    .select(s => s.entities);
+};

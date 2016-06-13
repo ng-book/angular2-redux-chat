@@ -23,3 +23,8 @@ export const MessagesReducer = function(state = initialState, action: Action): M
     }
   }
 }
+
+export function getMessageEntities() {
+  return (state$: Observable<MessagesState>) => state$
+    .select(s => s.entities);
+};

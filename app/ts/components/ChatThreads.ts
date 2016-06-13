@@ -9,16 +9,40 @@
 import {
   Component
 } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import {
+  Thread
+} from '../models';
+import {
+  AppState,
+  getThreadsEntities
+} from '../reducers';
 
 @Component({
   selector: 'chat-threads',
   template: `
-  <div>
-    chat threads
+  <!-- conversations -->
+  <div class="row">
+    <div class="conversation-wrap">
+
+      <div
+           *ngFor="let thread of threads$ | async"
+           >
+           hi
+      </div>
+
+    </div>
   </div>
   `
 })
+
+// TODO - this should be a container and the Thread can be a component
 export default class ChatThreads {
-  constructor() {
+  threads$: Observable<{ [id: string]: Thread }>
+
+  constructor(private store: Store<AppState>) {
+    // https://gist.github.com/btroncone/d6cf141d6f2c00dc6b35#let
+    this.threads$ = store.let(getThreadsEntities());
   }
 }

@@ -7,11 +7,11 @@ import {
 
 @Injectable()
 export class ThreadActions {
-  static ADD = '[Thread] Add';
-  add(text: string): Action {
+  static ADD_THREAD = '[Thread] Add';
+  add(thread: Thread): Action {
     return {
-      type: ThreadActions.ADD,
-      payload: text
+      type: ThreadActions.ADD_THREAD,
+      payload: thread
     };
   }
 }
