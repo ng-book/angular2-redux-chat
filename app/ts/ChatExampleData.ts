@@ -15,6 +15,7 @@ import {
 // the person using the app is Juliet
 const me: User = {
   id: uuid(),
+  isClient: true,
   name: 'Juliet',
   avatarSrc: require('images/avatars/female-avatar-1.png')
 };

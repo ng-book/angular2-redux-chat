@@ -26,7 +26,7 @@ import ChatMessage from '../components/ChatMessage';
 
 @Component({
   selector: 'chat-window',
-  directives: [],
+  directives: [ChatMessage],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="chat-window-container">
@@ -38,7 +38,7 @@ import ChatMessage from '../components/ChatMessage';
               <div class="panel-title-container">
                 <h3 class="panel-title">
                   <span class="glyphicon glyphicon-comment"></span>
-                  Chat - {{currentThread ? currentThread.name : ''}}
+                  Chat - {{currentThread.name}}
                 </h3>
               </div>
               <div class="panel-buttons-container"  >
@@ -47,12 +47,10 @@ import ChatMessage from '../components/ChatMessage';
             </div>
 
             <div class="panel-body msg-container-base">
-            <!--
               <chat-message
-                   *ngFor="let message of messages | async"
-                   [message]="message">
+                   *ngFor="let message of currentThread.messages"
+                   [message]="message" >
               </chat-message>
-              -->
             </div>
 
             <div class="panel-footer">
@@ -78,7 +76,6 @@ import ChatMessage from '../components/ChatMessage';
 })
 export default class ChatWindow {
   currentThread: Thread;
-  currentThread$: Observable<Thread>;
 
   // messages: Observable<any>;
   // currentThread: Thread;

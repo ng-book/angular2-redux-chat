@@ -52,14 +52,6 @@ export default class ChatMessage implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.userService.currentUser
-    //   .subscribe(
-    //     (user: User) => {
-    //       this.currentUser = user;
-    //       if (this.message.author && user) {
-    //         this.incoming = this.message.author.id !== user.id;
-    //       }
-    //     });
+    this.incoming = !this.message.author.isClient;
   }
-
 }
