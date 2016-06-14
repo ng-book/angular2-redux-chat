@@ -9,7 +9,8 @@ import {
 } from './models';
 import {
   ThreadActions,
-  MessageActions
+  MessageActions,
+  UserActions
 } from './actions';
 
 // the person using the app is Juliet
@@ -75,6 +76,10 @@ let tWait: Thread = {
 export default function ChatExampleData(store: Store<AppState>) {
   const threadActions = new ThreadActions();
   const messageActions = new MessageActions();
+  const userActions = new UserActions();
+
+  // set the current User
+  store.dispatch(userActions.setCurrent(me));
 
   // create a new thread
   store.dispatch(threadActions.add(tLadycap));

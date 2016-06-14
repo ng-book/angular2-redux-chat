@@ -45,7 +45,6 @@ import { FromNowPipe } from '../pipes/FromNowPipe';
 })
 export default class ChatMessage implements OnInit {
   message: Message;
-  currentUser: User;
   incoming: boolean;
 
   constructor() {

@@ -61,19 +61,23 @@ export const ThreadsReducer =
 
     case ThreadActions.SELECT_THREAD: {
       const thread: Thread = action.payload;
-
       const oldThread = state.entities[thread.id];
-      // const newThread = Object.assign({}, oldThread, {
-      //   messages: [...oldThread.messages, message]
-      // });
+
+      // mark the messages as read
+      const newMessages = oldThread.messages.map(
+        (message) => Object.assign({}, message, { isRead: true }));
+
+      // give them to this new thread
+      const newThread = Object.assign({}, oldThread, {
+        messages: newMessages
+      });
 
       return {
         ids: state.ids,
         currentThreadId: thread.id,
-        entities: state.entities
-        // entities: Object.assign({}, state.entities, {
-        //   [thread.id]: thread
-        // })
+        entities: Object.assign({}, state.entities, {
+          [thread.id]: newThread
+        })
       };
     }
 
