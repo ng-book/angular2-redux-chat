@@ -40,4 +40,13 @@ export class ThreadActions {
       }
     };
   }
+
+  static SELECT_THREAD = '[Thread] SELECT';
+  select(thread: Thread): Action {
+    return {
+      type: ThreadActions.SELECT_THREAD,
+      payload: thread
+    };
+  }
+
 }

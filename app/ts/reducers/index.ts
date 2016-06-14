@@ -47,3 +47,7 @@ export function getAllThreads() {
 export function getUnreadMessagesCount() {
   return compose(threads.getUnreadMessagesCount(), getThreadsState());
 }
+
+export function getCurrentThread() {
+  return compose(threads.getCurrentThread(), getThreadsState());
+}

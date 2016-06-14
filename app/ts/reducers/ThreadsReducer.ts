@@ -12,11 +12,13 @@ import { MessagesReducer } from './MessagesReducer';
 
 export interface ThreadsState {
   ids: string[];
+  currentThreadId?: string;
   entities: { [id: string]: Thread };
 };
 
 const initialState: ThreadsState = {
   ids: [],
+  currentThreadId: null,
   entities: {}
 };
 
@@ -32,6 +34,7 @@ export const ThreadsReducer =
 
       return {
         ids: [ ...state.ids, thread.id ],
+        currentThreadId: state.currentThreadId,
         entities: Object.assign({}, state.entities, {
           [thread.id]: thread
         })
@@ -49,11 +52,31 @@ export const ThreadsReducer =
 
       return {
         ids: state.ids,
+        currentThreadId: state.currentThreadId,
         entities: Object.assign({}, state.entities, {
           [thread.id]: newThread
         })
       };
     }
+
+    case ThreadActions.SELECT_THREAD: {
+      const thread: Thread = action.payload;
+
+      const oldThread = state.entities[thread.id];
+      // const newThread = Object.assign({}, oldThread, {
+      //   messages: [...oldThread.messages, message]
+      // });
+
+      return {
+        ids: state.ids,
+        currentThreadId: thread.id,
+        entities: state.entities
+        // entities: Object.assign({}, state.entities, {
+        //   [thread.id]: thread
+        // })
+      };
+    }
+
 
     default: {
       return state;
@@ -85,4 +108,14 @@ export function getUnreadMessagesCount() {
         })
         return unreadCount;
     }, 0));
+}
+
+export function getThread(id: string) {
+  return (state$: Observable<ThreadsState>) => state$
+    .select(s => s.entities[id]);
+}
+
+export function getCurrentThread() {
+  return (state$: Observable<ThreadsState>) => state$
+    .select(s => s.entities[s.currentThreadId]);
 }

@@ -99,6 +99,9 @@ export default function ChatExampleData(store: Store<AppState>) {
     text: 'I\'ll echo whatever you send me'
   }));
 
+  // select the first thread
+  store.dispatch(threadActions.select(tLadycap));
+
   // add messages to that thread
 
 

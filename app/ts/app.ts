@@ -62,3 +62,8 @@ require('./models/Message');
 require('./models/Thread');
 require('./actions');
 require('./ChatExampleData');
+require('./components/ChatMessage');
+require('./components/ChatWindow');
+require('./components/ChatThreads');
+require('./components/ChatThread');
+require('./components/ChatNavBar');
