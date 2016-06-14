@@ -72,3 +72,17 @@ export function getAllThreads() {
     .map(entities => Object.keys(entities)
                            .map((threadId) => entities[threadId]));
 }
+
+export function getUnreadMessagesCount() {
+  return (state$: Observable<ThreadsState>) => state$
+    .let(getAllThreads())
+    .map(threads => threads.reduce(
+      (unreadCount: number, thread: Thread) => {
+        thread.messages.forEach((message: Message) => {
+          if(!message.isRead) {
+            ++unreadCount;
+          }
+        })
+        return unreadCount;
+    }, 0));
+}

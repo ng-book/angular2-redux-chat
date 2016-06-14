@@ -43,3 +43,7 @@ export function getThreadsEntities() {
 export function getAllThreads() {
   return compose(threads.getAllThreads(), getThreadsState());
 }
+
+export function getUnreadMessagesCount() {
+  return compose(threads.getUnreadMessagesCount(), getThreadsState());
+}
