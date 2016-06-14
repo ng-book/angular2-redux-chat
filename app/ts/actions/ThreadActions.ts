@@ -22,13 +22,15 @@ export class ThreadActions {
     id?: string,
     sentAt?: Date,
     isRead?: boolean,
+    thread?: Thread,
     author: User,
     text: string
   }): Action {
     const defaults = {
       id: uuid(),
       sentAt: new Date(),
-      isRead: false
+      isRead: false,
+      thread: thread
     };
     const message = Object.assign({}, defaults, messageArgs);
 

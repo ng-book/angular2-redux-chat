@@ -1,5 +1,8 @@
 import { Store } from '@ngrx/store';
-import { AppState } from './reducers';
+import {
+  AppState,
+  getMessages
+} from './reducers';
 import { uuid } from './util/uuid';
 import * as moment from 'moment';
 import {
@@ -83,10 +86,6 @@ export default function ChatExampleData(store: Store<AppState>) {
 
   // create a new thread
   store.dispatch(threadActions.add(tLadycap));
-  store.dispatch(threadActions.add(tEcho));
-  // store.dispatch(threadActions.add(tRev));
-  //  store.dispatch(threadActions.add(tWait));
-
   store.dispatch(threadActions.addMessage(tLadycap, {
     author: me,
     sentAt: moment().subtract(45, 'minutes').toDate(),
@@ -98,17 +97,56 @@ export default function ChatExampleData(store: Store<AppState>) {
     text: 'So shall you feel the loss, but not the friend which you weep for.'
   }));
 
-
+  store.dispatch(threadActions.add(tEcho));
   store.dispatch(threadActions.addMessage(tEcho, {
     author: echo,
-    sentAt: moment().subtract(20, 'minutes').toDate(),
+    sentAt: moment().subtract(1, 'minutes').toDate(),
     text: 'I\'ll echo whatever you send me'
+  }));
+
+  store.dispatch(threadActions.add(tRev));
+  store.dispatch(threadActions.addMessage(tRev, {
+    author: rev,
+    sentAt: moment().subtract(3, 'minutes').toDate(),
+    text: 'I\'ll reverse whatever you send me'
+  }));
+
+  store.dispatch(threadActions.add(tWait));
+  store.dispatch(threadActions.addMessage(tWait, {
+    author: wait,
+    sentAt: moment().subtract(4, 'minutes').toDate(),
+    text: `I\'ll wait however many seconds you send to me before responding. Try sending '3'`
   }));
 
   // select the first thread
   store.dispatch(threadActions.select(tLadycap));
 
-  // add messages to that thread
+
+  store.let(getMessages())
+  .filter(message => message.author.id === me.id)
+  .subscribe(message => {
+    switch (message.thread.id) {
+      case tEcho.id: {
+
+        // echo back the same message to the user
+        store.dispatch(threadActions.addMessage(tEcho, {
+          author: echo,
+          text: message.text
+        }));
+
+        break;
+      }
+      case tRev.id: {
+        break;
+      }
+      case tWait.id: {
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  })
 
 
 }

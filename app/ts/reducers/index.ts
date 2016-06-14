@@ -61,3 +61,7 @@ export function getUsersState() {
 export function getCurrentUser() {
   return compose(users.getCurrentUser(), getUsersState());
 }
+
+export function getMessages() {
+  return compose(threads.getMessages(), getThreadsState());
+}

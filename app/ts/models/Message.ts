@@ -1,4 +1,5 @@
 import { User } from './User';
+import { Thread } from './Thread';
 
 export interface Message {
   id: string;
@@ -6,4 +7,5 @@ export interface Message {
   isRead: boolean;
   author: User;
   text: string;
+  thread: Thread;
 }

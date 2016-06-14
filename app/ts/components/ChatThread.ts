@@ -8,15 +8,17 @@
 
 import {
   Component,
-  OnInit
+  OnInit,
+  EventEmitter
 } from '@angular/core';
 import {
   Thread
 } from '../models';
 
 @Component({
-  inputs: ['thread'],
+  inputs: ['thread', 'selected'],
   selector: 'chat-thread',
+  outputs: ['onThreadSelected'],
   template: `
   <div class="media conversation">
     <div class="pull-left">
@@ -37,22 +39,15 @@ import {
 })
 export default class ChatThread {
   thread: Thread;
-  selected: boolean = false;
+  selected: boolean;
+  onThreadSelected: EventEmitter<Thread>;
 
   constructor() {
+    this.onThreadSelected = new EventEmitter<Thread>();
   }
 
-  // ngOnInit(): void {
-  //   this.threadsService.currentThread
-  //     .subscribe( (currentThread: Thread) => {
-  //       this.selected = currentThread &&
-  //         this.thread &&
-  //         (currentThread.id === this.thread.id);
-  //     });
-  // }
-  //
-  // clicked(event: any): void {
-  //   this.threadsService.setCurrentThread(this.thread);
-  //   event.preventDefault();
-  // }
+  clicked(event: any): void {
+    this.onThreadSelected.emit(this.thread);
+    event.preventDefault();
+  }
 }

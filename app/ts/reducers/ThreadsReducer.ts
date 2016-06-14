@@ -1,5 +1,6 @@
 import '@ngrx/core/add/operator/select';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/distinctKey';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 
@@ -121,4 +122,14 @@ export function getThread(id: string) {
 export function getCurrentThread() {
   return (state$: Observable<ThreadsState>) => state$
     .select(s => s.entities[s.currentThreadId]);
+}
+
+export function getMessages() {
+  return (state$: Observable<ThreadsState>) => state$
+    .let(getAllThreads())
+    .select(threads => threads.reduce( // gather all messages
+      (messages, thread) => [...messages, ...thread.messages],
+      []).sort((m1, m2) => m1.sentAt - m2.sentAt)) // sort them by time
+    .flatMap(message => message) // emit once each message
+    .distinctKey('id'); // and distinct on id (memory leak!, yolo)
 }

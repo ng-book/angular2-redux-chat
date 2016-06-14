@@ -31,7 +31,6 @@ import ChatMessage from '../components/ChatMessage';
 @Component({
   selector: 'chat-window',
   directives: [ChatMessage],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="chat-window-container">
       <div class="chat-window">
