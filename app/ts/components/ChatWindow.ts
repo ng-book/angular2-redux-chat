@@ -19,8 +19,12 @@ import {
   Thread
 } from '../models';
 import {
+  ThreadActions
+} from '../actions';
+import {
   AppState,
-  getCurrentThread
+  getCurrentThread,
+  getCurrentUser
 } from '../reducers';
 import ChatMessage from '../components/ChatMessage';
 
@@ -49,7 +53,7 @@ import ChatMessage from '../components/ChatMessage';
             <div class="panel-body msg-container-base">
               <chat-message
                    *ngFor="let message of currentThread.messages"
-                   [message]="message" >
+                   [message]="message">
               </chat-message>
             </div>
 
@@ -76,17 +80,14 @@ import ChatMessage from '../components/ChatMessage';
 })
 export default class ChatWindow {
   currentThread: Thread;
-
-  // messages: Observable<any>;
-  // currentThread: Thread;
   draftMessage: {text: string};
-  // currentUser: User;
-  //
-  constructor(
-    private store: Store<AppState>,
-    private el: ElementRef) {
-    // this.currentThread$ = store.let(getCurrentThread());
+  currentUser: User;
+
+  constructor(private store: Store<AppState>,
+              private threadActions: ThreadActions,
+              private el: ElementRef) {
     store.let(getCurrentThread()).subscribe((t) => this.currentThread = t);
+    store.let(getCurrentUser()).subscribe((u) => this.currentUser = u);
     this.draftMessage = { text: '' };
   }
 
@@ -115,24 +116,25 @@ export default class ChatWindow {
   //       });
   // }
   //
-  // onEnter(event: any): void {
-  //   this.sendMessage();
-  //   event.preventDefault();
-  // }
-  //
-  // sendMessage(): void {
-  //   let m: Message = this.draftMessage;
-  //   m.author = this.currentUser;
-  //   m.thread = this.currentThread;
-  //   m.isRead = true;
-  //   this.messagesService.addMessage(m);
-  //   this.draftMessage = new Message();
-  // }
-  //
-  // scrollToBottom(): void {
-  //   let scrollPane: any = this.el
-  //     .nativeElement.querySelector('.msg-container-base');
-  //   scrollPane.scrollTop = scrollPane.scrollHeight;
-  // }
-  //
+  onEnter(event: any): void {
+    this.sendMessage();
+    event.preventDefault();
+  }
+
+  sendMessage(): void {
+    this.store.dispatch(this.threadActions.addMessage(
+      this.currentThread,
+      {
+        author: this.currentUser,
+        isRead: true,
+        text: this.draftMessage.text
+      }
+    ));
+  }
+
+  scrollToBottom(): void {
+    let scrollPane: any = this.el
+      .nativeElement.querySelector('.msg-container-base');
+    scrollPane.scrollTop = scrollPane.scrollHeight;
+  }
 }

@@ -6,9 +6,10 @@ import { Observable } from 'rxjs/Observable';
 import '@ngrx/core/add/operator/select';
 
 import {
-  MessagesState,
-  MessagesReducer
-} from './MessagesReducer.ts';
+  UsersState,
+  UsersReducer
+} from './UsersReducer.ts';
+import * as users from './UsersReducer.ts';
 
 import {
   ThreadsState,
@@ -17,12 +18,12 @@ import {
 import * as threads from './ThreadsReducer.ts';
 
 export interface AppState {
-  messages: MessagesState;
+  users: UsersState;
   threads: ThreadsState;
 }
 
 export default compose(storeLogger(), combineReducers)({
-  messages: MessagesReducer,
+  users: UsersReducer,
   threads: ThreadsReducer
 });
 
@@ -50,4 +51,13 @@ export function getUnreadMessagesCount() {
 
 export function getCurrentThread() {
   return compose(threads.getCurrentThread(), getThreadsState());
+}
+
+export function getUsersState() {
+  return (state$: Observable<AppState>) => state$
+  .select(s => s.users);
+}
+
+export function getCurrentUser() {
+  return compose(users.getCurrentUser(), getUsersState());
 }

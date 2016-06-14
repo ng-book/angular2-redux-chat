@@ -22,6 +22,7 @@ import ChatPage from './pages/ChatPage';
 
 import ChatExampleData from './ChatExampleData';
 import reducer, { AppState } from './reducers';
+import actions from './actions';
 
 // import { messages } from './reducers/messages';
 
@@ -46,7 +47,8 @@ class ChatApp {
 }
 
 bootstrap(ChatApp, [
-  provideStore(reducer)
+  provideStore(reducer),
+  actions
 ])
 .catch(err => console.error(err));
 

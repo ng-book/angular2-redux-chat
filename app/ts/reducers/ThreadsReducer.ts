@@ -81,7 +81,6 @@ export const ThreadsReducer =
       };
     }
 
-
     default: {
       return state;
     }
