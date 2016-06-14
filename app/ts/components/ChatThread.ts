@@ -14,7 +14,6 @@ import {
   Thread
 } from '../models';
 
-
 @Component({
   inputs: ['thread'],
   selector: 'chat-thread',
@@ -28,7 +27,9 @@ import {
       <h5 class="media-heading contact-name">{{thread.name}}
         <span *ngIf="selected">&bull;</span>
       </h5>
-      <small class="message-preview">{{thread.lastMessage.text}}</small>
+      <small class="message-preview">
+        {{thread.messages[thread.messages.length - 1].text}}
+      </small>
     </div>
     <a (click)="clicked($event)" class="div-link">Select</a>
   </div>

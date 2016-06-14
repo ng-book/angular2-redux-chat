@@ -46,25 +46,29 @@ let wait: User = {
 let tLadycap: Thread = {
   id: 'tLadycap',
   name: ladycap.name,
-  avatarSrc: ladycap.avatarSrc
+  avatarSrc: ladycap.avatarSrc,
+  messages: []
 };
 
 let tEcho: Thread = {
   id: 'tEcho',
   name: echo.name,
-  avatarSrc: echo.avatarSrc
+  avatarSrc: echo.avatarSrc,
+  messages: []
 };
 
 let tRev: Thread = {
   id: 'tRev',
   name: rev.name,
-  avatarSrc: rev.avatarSrc
+  avatarSrc: rev.avatarSrc,
+  messages: []
 };
 
 let tWait: Thread = {
   id: 'tWait',
   name: wait.name,
-  avatarSrc: wait.avatarSrc
+  avatarSrc: wait.avatarSrc,
+  messages: []
 };
 
 export default function ChatExampleData(store: Store<AppState>) {
@@ -75,22 +79,27 @@ export default function ChatExampleData(store: Store<AppState>) {
   store.dispatch(threadActions.add(tLadycap));
   store.dispatch(threadActions.add(tEcho));
   // store.dispatch(threadActions.add(tRev));
-  // store.dispatch(threadActions.add(tWait));
+  //  store.dispatch(threadActions.add(tWait));
 
-  // store.dispatch(messageActions.sendMessageOnThread(tLadycap, {
-  //   author: me,
-  //   sentAt: moment().subtract(45, 'minutes').toDate(),
-  //   text: 'Yet let me weep for such a feeling loss.',
-  //   thread: tLadycap
-  // }));
-  // store.dispatch(messageActions.sendMessageOnThread(tLadycap, {
-  //   author: ladycap,
-  //   sentAt: moment().subtract(20, 'minutes').toDate(),
-  //   text: 'So shall you feel the loss, but not the friend which you weep for.',
-  //   thread: tLadycap
-  // });
+  store.dispatch(threadActions.addMessage(tLadycap, {
+    author: me,
+    sentAt: moment().subtract(45, 'minutes').toDate(),
+    text: 'Yet let me weep for such a feeling loss.'
+  }));
+  store.dispatch(threadActions.addMessage(tLadycap, {
+    author: ladycap,
+    sentAt: moment().subtract(20, 'minutes').toDate(),
+    text: 'So shall you feel the loss, but not the friend which you weep for.'
+  }));
 
-  // // add messages to that thread
+
+  store.dispatch(threadActions.addMessage(tEcho, {
+    author: echo,
+    sentAt: moment().subtract(20, 'minutes').toDate(),
+    text: 'I\'ll echo whatever you send me'
+  }));
+
+  // add messages to that thread
 
 
 }

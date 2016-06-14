@@ -57,5 +57,8 @@ bootstrap(ChatApp, [
 require('./pages/ChatPage');
 require('./reducers');
 require('./models');
+require('./models/User');
+require('./models/Message');
+require('./models/Thread');
 require('./actions');
 require('./ChatExampleData');

@@ -8,6 +8,7 @@ import {
   Message
 } from '../models';
 import { ThreadActions } from '../actions';
+import { MessagesReducer } from './MessagesReducer';
 
 export interface ThreadsState {
   ids: string[];
@@ -36,6 +37,24 @@ export const ThreadsReducer =
         })
       };
     }
+
+    case ThreadActions.ADD_MESSAGE: {
+      const thread: Thread = action.payload.thread;
+      const message: Message = action.payload.message;
+
+      const oldThread = state.entities[thread.id];
+      const newThread = Object.assign({}, oldThread, {
+        messages: [...oldThread.messages, message]
+      });
+
+      return {
+        ids: state.ids,
+        entities: Object.assign({}, state.entities, {
+          [thread.id]: newThread
+        })
+      };
+    }
+
     default: {
       return state;
     }

@@ -1,5 +1,5 @@
 {
-  "name": "angular2-rxjs-chat",
+  "name": "angular2-ngrx-chat",
   "version": false,
   "ambientDependencies": {
     "core-js": "registry:dt/core-js#0.0.0+20160317120654",

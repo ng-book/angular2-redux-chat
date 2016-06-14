@@ -26,6 +26,7 @@
     "@ngrx/store": "^2.0.0",
     "base64id": "0.1.0",
     "core-js": "^2.2.2",
+    "es6-shim": "^0.35.1",
     "immutable": "^3.8.1",
     "lodash": "^3.10.1",
     "moment": "2.10.6",
