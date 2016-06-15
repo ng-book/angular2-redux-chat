@@ -74,8 +74,7 @@
 }
 
 .chat-window {
-  @extend .col-xs-5; 
-  @extend .col-md-3;
+  @extend .col-xs-10, .col-sm-5;
 
   bottom: 0;
   right: 0;

@@ -46,9 +46,16 @@ export const ThreadsReducer =
       const thread: Thread = action.payload.thread;
       const message: Message = action.payload.message;
 
+      // special case: if the message being added is in the current thread, then
+      // mark it as read 
+      const isRead = message.thread.id === state.currentThreadId ?
+                      true : message.isRead;
+      const newMessage = Object.assign({}, message, { isRead: isRead });
+      console.log('newMessage', newMessage, thread, isRead);
+
       const oldThread = state.entities[thread.id];
       const newThread = Object.assign({}, oldThread, {
-        messages: [...oldThread.messages, message]
+        messages: [...oldThread.messages, newMessage]
       });
 
       return {
