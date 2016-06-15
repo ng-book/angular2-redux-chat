@@ -7,12 +7,10 @@ import { uuid } from './util/uuid';
 import * as moment from 'moment';
 import {
   Thread,
-  Message,
   User
 } from './models';
 import {
   ThreadActions,
-  MessageActions,
   UserActions
 } from './actions';
 
@@ -78,7 +76,6 @@ let tWait: Thread = {
 
 export default function ChatExampleData(store: Store<AppState>) {
   const threadActions = new ThreadActions();
-  const messageActions = new MessageActions();
   const userActions = new UserActions();
 
   // set the current User

@@ -10,14 +10,15 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import {
-  User,
-  Message,
-  Thread
-} from '../models';
+import { Message } from '../models';
 import { FromNowPipe } from '../pipes/FromNowPipe';
 
-@Component({
+/**
+ * ChatMessage is a component that shows a single Message in the ChatWindow.
+ * ChatMessage shows the message a user sent and indicates whether it is
+ * incoming or outgoing
+ */
+ @Component({
   inputs: ['message'],
   selector: 'chat-message',
   pipes: [FromNowPipe],
@@ -44,11 +45,8 @@ import { FromNowPipe } from '../pipes/FromNowPipe';
   `
 })
 export default class ChatMessage implements OnInit {
-  message: Message;
-  incoming: boolean;
-
-  constructor() {
-  }
+  message : Message;
+  incoming : boolean;
 
   ngOnInit(): void {
     this.incoming = !this.message.author.isClient;

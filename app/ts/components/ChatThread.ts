@@ -15,6 +15,10 @@ import {
   Thread
 } from '../models';
 
+/**
+ * ChatThread shows an individual thread in the ChatThreads. It indicates the
+ * currently selected thread
+ */
 @Component({
   inputs: ['thread', 'selected'],
   selector: 'chat-thread',
@@ -38,9 +42,9 @@ import {
   `
 })
 export default class ChatThread {
-  thread: Thread;
-  selected: boolean;
-  onThreadSelected: EventEmitter<Thread>;
+  thread : Thread;
+  selected : boolean;
+  onThreadSelected : EventEmitter<Thread>;
 
   constructor() {
     this.onThreadSelected = new EventEmitter<Thread>();

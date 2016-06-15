@@ -1,7 +1,16 @@
+/**
+ * Copyright 2016, Fullstack.io, LLC.
+ *
+ * This source code is licensed under the MIT-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+ /* tslint:disable:typedef */
 
 import { compose } from '@ngrx/core/compose';
 import { storeLogger } from 'ngrx-store-logger';
-import { combineReducers } from '@ngrx/store'
+import { combineReducers } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import '@ngrx/core/add/operator/select';
 
@@ -18,8 +27,8 @@ import {
 import * as threads from './ThreadsReducer.ts';
 
 export interface AppState {
-  users: UsersState;
-  threads: ThreadsState;
+  users : UsersState;
+  threads : ThreadsState;
 }
 
 export default compose(storeLogger(), combineReducers)({
@@ -29,10 +38,10 @@ export default compose(storeLogger(), combineReducers)({
 
 
 /**
-  * Selectors
-  */
+ * Selectors
+ */
 
-export function getThreadsState() {
+export function getThreadsState()  {
   return (state$: Observable<AppState>) => state$
   .select(s => s.threads);
 }

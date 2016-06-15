@@ -14,9 +14,9 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 /*
  * Components
  */
-import ChatNavBar from '../components/ChatNavBar';
-import ChatThreads from '../components/ChatThreads';
-import ChatWindow from '../components/ChatWindow';
+import ChatNavBar from '../containers/ChatNavBar';
+import ChatThreads from '../containers/ChatThreads';
+import ChatWindow from '../containers/ChatWindow';
 
 @Component({
   selector: 'chat-page',

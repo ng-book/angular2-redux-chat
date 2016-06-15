@@ -1,11 +1,23 @@
+/**
+ * Copyright 2016, Fullstack.io, LLC.
+ *
+ * This source code is licensed under the MIT-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { uuid } from '../util/uuid';
 import {
   User,
-  Thread,
-  Message
+  Thread
 } from '../models';
+
+/**
+ * ThreadActions specifies _action creators_ (i.e. objects that describe
+ * changes to the reducers) that are concerned with Threads and Messages
+ */
 
 @Injectable()
 export class ThreadActions {
@@ -19,12 +31,12 @@ export class ThreadActions {
 
   static ADD_MESSAGE = '[Thread] Add Message';
   addMessage(thread: Thread, messageArgs: {
-    id?: string,
-    sentAt?: Date,
-    isRead?: boolean,
-    thread?: Thread,
-    author: User,
-    text: string
+    id? : string,
+    sentAt? : Date,
+    isRead? : boolean,
+    thread? : Thread,
+    author : User,
+    text : string
   }): Action {
     const defaults = {
       id: uuid(),

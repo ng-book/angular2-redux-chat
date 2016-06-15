@@ -1,17 +1,22 @@
-import { MessageActions } from './MessageActions';
+/**
+ * Copyright 2016, Fullstack.io, LLC.
+ *
+ * This source code is licensed under the MIT-style license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
 import { ThreadActions } from './ThreadActions';
 import { UserActions } from './UserActions';
 
 // export here for object imports
 export {
-  MessageActions,
   ThreadActions,
   UserActions
 };
 
 // export here for injecting the dependencies (e.g. at bootstrap)
 export default [
-  MessageActions,
   ThreadActions,
   UserActions
 ];
