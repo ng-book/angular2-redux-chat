@@ -137,9 +137,36 @@ export default function ChatExampleData(store: Store<AppState>) {
         break;
       }
       case tRev.id: {
+
+        // echo back the message reveresed to the user
+        store.dispatch(threadActions.addMessage(tRev, {
+          author: rev,
+          text: message.text.split('').reverse().join('')
+        }));
+
         break;
       }
       case tWait.id: {
+
+        let waitTime: number = parseInt(message.text, 10);
+        let reply: string;
+
+        if (isNaN(waitTime)) {
+          waitTime = 0;
+          reply = `I didn\'t understand ${message}. Try sending me a number`;
+        } else {
+          reply = `I waited ${waitTime} seconds to send you this.`;
+        }
+
+        setTimeout(
+          () => {
+            store.dispatch(threadActions.addMessage(tWait, {
+              author: wait,
+              text: reply
+            }));
+          },
+          waitTime * 1000);
+
         break;
       }
       default: {
