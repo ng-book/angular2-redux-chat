@@ -9,7 +9,6 @@ import {
   Message
 } from '../models';
 import { ThreadActions } from '../actions';
-import { MessagesReducer } from './MessagesReducer';
 
 export interface ThreadsState {
   ids: string[];
@@ -47,11 +46,10 @@ export const ThreadsReducer =
       const message: Message = action.payload.message;
 
       // special case: if the message being added is in the current thread, then
-      // mark it as read 
+      // mark it as read
       const isRead = message.thread.id === state.currentThreadId ?
                       true : message.isRead;
       const newMessage = Object.assign({}, message, { isRead: isRead });
-      console.log('newMessage', newMessage, thread, isRead);
 
       const oldThread = state.entities[thread.id];
       const newThread = Object.assign({}, oldThread, {

@@ -58,6 +58,7 @@ bootstrap(ChatApp, [
 // from webpack, but removing them is a TODO
 require('./pages/ChatPage');
 require('./reducers');
+require('./reducers/ThreadsReducer')
 require('./models');
 require('./models/User');
 require('./models/Message');
