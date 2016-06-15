@@ -41,9 +41,9 @@ import {
   `
 })
 export default class ChatThread {
-  thread : Thread;
-  selected : boolean;
-  onThreadSelected : EventEmitter<Thread>;
+  thread: Thread;
+  selected: boolean;
+  onThreadSelected: EventEmitter<Thread>;
 
   constructor() {
     this.onThreadSelected = new EventEmitter<Thread>();

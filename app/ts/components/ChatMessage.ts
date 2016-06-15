@@ -45,8 +45,8 @@ import { FromNowPipe } from '../pipes/FromNowPipe';
   `
 })
 export default class ChatMessage implements OnInit {
-  message : Message;
-  incoming : boolean;
+  message: Message;
+  incoming: boolean;
 
   ngOnInit(): void {
     this.incoming = !this.message.author.isClient;

@@ -18,7 +18,7 @@ import { UserActions } from '../actions';
  * the reducer, and the selectors.
  */
 export interface UsersState {
-  currentUser : User;
+  currentUser: User;
 };
 
 const initialState: UsersState = {
@@ -26,6 +26,7 @@ const initialState: UsersState = {
 };
 
 export const UsersReducer =
+
   function(state = initialState, action: Action): UsersState {
   switch (action.type) {
     case UserActions.SET_CURRENT:

@@ -70,9 +70,6 @@
         "property-declaration": "onespace",
         "variable-declaration": "nospace"
     }],
-    "variable-name": [true,
-      "allow-leading-underscore",
-      "allow-pascal-case"],
     "whitespace": [true,
       "check-branch",
       "check-decl",

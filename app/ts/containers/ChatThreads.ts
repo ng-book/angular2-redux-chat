@@ -46,8 +46,8 @@ import ChatThread from '../components/ChatThread';
 })
 
 export default class ChatThreads {
-  threads$ : Observable<Thread[]>;
-  currentThreadId : string;
+  threads$: Observable<Thread[]>;
+  currentThreadId: string;
 
   constructor(private store: Store<AppState>,
               private threadActions: ThreadActions) {

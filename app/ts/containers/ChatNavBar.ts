@@ -40,7 +40,7 @@ import {
   `
 })
 export default class ChatNavBar  {
-  unreadMessagesCount$ : Observable<number>;
+  unreadMessagesCount$: Observable<number>;
 
   constructor(private store: Store<AppState>) {
     this.unreadMessagesCount$ = store.let(getUnreadMessagesCount());

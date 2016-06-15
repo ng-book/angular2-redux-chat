@@ -79,9 +79,9 @@ import ChatMessage from '../components/ChatMessage';
   `
 })
 export default class ChatWindow {
-  currentThread : Thread;
-  draftMessage : {text : string};
-  currentUser : User;
+  currentThread: Thread;
+  draftMessage: {text: string};
+  currentUser: User;
 
   constructor(private store: Store<AppState>,
               private threadActions: ThreadActions,

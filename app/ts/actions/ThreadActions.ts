@@ -30,12 +30,12 @@ export class ThreadActions {
 
   static ADD_MESSAGE = '[Thread] Add Message';
   addMessage(thread: Thread, messageArgs: {
-    id? : string,
-    sentAt? : Date,
-    isRead? : boolean,
-    thread? : Thread,
-    author : User,
-    text : string
+    id?: string,
+    sentAt?: Date,
+    isRead?: boolean,
+    thread?: Thread,
+    author: User,
+    text: string
   }): Action {
     const defaults = {
       id: uuid(),

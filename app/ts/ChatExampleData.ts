@@ -172,7 +172,7 @@ export default function ChatExampleData(store: Store<AppState>) {
       default:
         break;
     }
-  })
+  });
 
 
 }

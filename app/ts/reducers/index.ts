@@ -27,8 +27,8 @@ import {
 import * as threads from './ThreadsReducer.ts';
 
 export interface AppState {
-  users : UsersState;
-  threads : ThreadsState;
+  users: UsersState;
+  threads: ThreadsState;
 }
 
 export default compose(storeLogger(), combineReducers)({

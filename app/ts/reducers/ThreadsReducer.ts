@@ -34,9 +34,9 @@ import { ThreadActions } from '../actions';
  * of Message ids in your Threads.
  */
 export interface ThreadsState {
-  ids : string[];
-  entities : { [id: string]: Thread };
-  currentThreadId? : string;
+  ids: string[];
+  entities: { [id: string]: Thread };
+  currentThreadId?: string;
 };
 
 const initialState: ThreadsState = {
@@ -121,7 +121,7 @@ export const ThreadsReducer =
     default:
       return state;
   }
-}
+};
 
 export function getThreadsEntities() {
   return (state$: Observable<ThreadsState>) => state$
@@ -146,7 +146,7 @@ export function getUnreadMessagesCount() {
           if (!message.isRead) {
             ++unreadCount;
           }
-        })
+        });
         return unreadCount;
       },
       0));
