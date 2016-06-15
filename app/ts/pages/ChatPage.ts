@@ -6,18 +6,15 @@
  *
  */
 
-import {
-  Component
-} from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-
-/*
- * Components
- */
+import { Component } from '@angular/core';
 import ChatNavBar from '../containers/ChatNavBar';
 import ChatThreads from '../containers/ChatThreads';
 import ChatWindow from '../containers/ChatWindow';
 
+/**
+ * ChatPage is the page which shows our chat view. In a larger app we'd
+ * have several pages.  
+ */
 @Component({
   selector: 'chat-page',
   directives: [ChatNavBar,
@@ -34,6 +31,4 @@ import ChatWindow from '../containers/ChatWindow';
   `
 })
 export default class ChatPage {
-  constructor() {
-  }
 }

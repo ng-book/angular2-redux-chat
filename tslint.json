@@ -15,7 +15,7 @@
     "label-undefined": true,
     "jsdoc-format": true,
     "max-line-length": [true, 80],
-    "member-ordering": [true,
+    "member-ordering": [false,
         "public-before-private",
         "variables-before-functions"
     ],
@@ -37,7 +37,7 @@
     "no-require-imports": false,
     "no-shadowed-variable": true,
     "no-string-literal": true,
-    "no-switch-case-fall-through": true,
+    "no-switch-case-fall-through": false,
     "trailing-comma": false,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
@@ -71,12 +71,14 @@
         "variable-declaration": "nospace"
     }],
     "variable-name": [true,
-      "allow-leading-underscore"],
+      "allow-leading-underscore",
+      "allow-pascal-case"],
     "whitespace": [true,
       "check-branch",
       "check-decl",
       "check-operator",
       "check-separator",
+      "check-module",
       "check-type"
     ]
   }

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
- 
+
 import {
   Component
 } from '@angular/core';
@@ -16,6 +16,9 @@ import {
   getUnreadMessagesCount
 } from '../reducers';
 
+/**
+ * ChatNavBar shows the header and unread count
+ */
 @Component({
   selector: 'chat-nav-bar',
   template: `
@@ -37,7 +40,7 @@ import {
   `
 })
 export default class ChatNavBar  {
-  unreadMessagesCount$: Observable<number>;
+  unreadMessagesCount$ : Observable<number>;
 
   constructor(private store: Store<AppState>) {
     this.unreadMessagesCount$ = store.let(getUnreadMessagesCount());

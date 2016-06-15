@@ -11,17 +11,32 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/distinctKey';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-
 import {
   Thread,
   Message
 } from '../models';
 import { ThreadActions } from '../actions';
 
+/**
+ * This file describes the state concerning Threads, how to modify them through
+ * the reducer, and how to query the state via selectors.
+ *
+ * ThreadsState stores the list of Threads indexed by id in `entities`, as well
+ * as a complete list of the ids in `ids`.
+ *
+ * We also store the id of the current thread so that we know what the user is
+ * currently looking at - this is valuable for the unread messages count, for
+ * instance.
+ *
+ * In this app, we store the Messages in their respective Thread and we don't
+ * store the Messages apart from that Thread. In your app you may find it useful
+ * to separate Messages into their own Messages reducer and keep only a list
+ * of Message ids in your Threads.
+ */
 export interface ThreadsState {
-  ids: string[];
-  currentThreadId?: string;
-  entities: { [id: string]: Thread };
+  ids : string[];
+  entities : { [id: string]: Thread };
+  currentThreadId? : string;
 };
 
 const initialState: ThreadsState = {
@@ -30,9 +45,15 @@ const initialState: ThreadsState = {
   entities: {}
 };
 
+/**
+ * The `ThreadsReducer` describes how to modify the `ThreadsState` given a
+ * particular action.
+ */
 export const ThreadsReducer =
   function(state = initialState, action: Action): ThreadsState {
   switch (action.type) {
+
+    // Adds a new Thread to the list of entities
     case ThreadActions.ADD_THREAD: {
       const thread: Thread = action.payload;
 
@@ -49,6 +70,7 @@ export const ThreadsReducer =
       };
     }
 
+    // Adds a new Message to a particular Thread
     case ThreadActions.ADD_MESSAGE: {
       const thread: Thread = action.payload.thread;
       const message: Message = action.payload.message;
@@ -73,6 +95,7 @@ export const ThreadsReducer =
       };
     }
 
+    // Select a particular thread in the UI
     case ThreadActions.SELECT_THREAD: {
       const thread: Thread = action.payload;
       const oldThread = state.entities[thread.id];
@@ -95,9 +118,8 @@ export const ThreadsReducer =
       };
     }
 
-    default: {
+    default:
       return state;
-    }
   }
 }
 
@@ -106,6 +128,7 @@ export function getThreadsEntities() {
     .select(s => s.entities);
 };
 
+// This selector will emit an array of all Threads
 export function getAllThreads() {
   return (state$: Observable<ThreadsState>) => state$
     .let(getThreadsEntities())
@@ -113,30 +136,41 @@ export function getAllThreads() {
                            .map((threadId) => entities[threadId]));
 }
 
+// This selector emits the number of unread messages from all Threads
 export function getUnreadMessagesCount() {
   return (state$: Observable<ThreadsState>) => state$
     .let(getAllThreads())
     .map(threads => threads.reduce(
       (unreadCount: number, thread: Thread) => {
         thread.messages.forEach((message: Message) => {
-          if(!message.isRead) {
+          if (!message.isRead) {
             ++unreadCount;
           }
         })
         return unreadCount;
-    }, 0));
+      },
+      0));
 }
 
+// This selector will fetch a particular Thread by id
 export function getThread(id: string) {
   return (state$: Observable<ThreadsState>) => state$
     .select(s => s.entities[id]);
 }
 
+// This selector emits the current thread
 export function getCurrentThread() {
   return (state$: Observable<ThreadsState>) => state$
     .select(s => s.entities[s.currentThreadId]);
 }
 
+/**
+ * This selector will emit once for every new message.
+ *
+ * It's a bit of a hack in that the `distinctKey` below will keep an internal
+ * hash of the message ids that it has seen. In a real app you'd want to clear
+ * that internal cache if you have a large number of messages.
+ */
 export function getMessages() {
   return (state$: Observable<ThreadsState>) => state$
     .let(getAllThreads())

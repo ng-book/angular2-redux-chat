@@ -10,12 +10,15 @@ import '@ngrx/core/add/operator/select';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-
 import { User } from '../models';
 import { UserActions } from '../actions';
 
+/**
+ * This file describes the state concerning Users, how to modify it through
+ * the reducer, and the selectors.
+ */
 export interface UsersState {
-  currentUser: User;
+  currentUser : User;
 };
 
 const initialState: UsersState = {
@@ -25,17 +28,15 @@ const initialState: UsersState = {
 export const UsersReducer =
   function(state = initialState, action: Action): UsersState {
   switch (action.type) {
-    case UserActions.SET_CURRENT: {
+    case UserActions.SET_CURRENT:
       const user: User = action.payload;
       return {
         currentUser: user
-      }
-    }
-    default: {
+      };
+    default:
       return state;
-    }
   }
-}
+};
 
 export function getCurrentUser() {
   return (state$: Observable<UsersState>) => state$

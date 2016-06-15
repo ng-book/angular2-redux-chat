@@ -14,10 +14,15 @@ import {
   UserActions
 } from './actions';
 
+/**
+ * ChatExampleData sets up the initial data for our chats as well as
+ * configuring the "bots".
+ */
+
 // the person using the app is Juliet
 const me: User = {
   id: uuid(),
-  isClient: true,
+  isClient: true, // <-- notice we're specifying the client as this User
   name: 'Juliet',
   avatarSrc: require('images/avatars/female-avatar-1.png')
 };
@@ -81,7 +86,7 @@ export default function ChatExampleData(store: Store<AppState>) {
   // set the current User
   store.dispatch(userActions.setCurrent(me));
 
-  // create a new thread
+  // create a new thread and add messages
   store.dispatch(threadActions.add(tLadycap));
   store.dispatch(threadActions.addMessage(tLadycap, {
     author: me,
@@ -94,6 +99,7 @@ export default function ChatExampleData(store: Store<AppState>) {
     text: 'So shall you feel the loss, but not the friend which you weep for.'
   }));
 
+  // create a few more threads
   store.dispatch(threadActions.add(tEcho));
   store.dispatch(threadActions.addMessage(tEcho, {
     author: echo,
@@ -112,19 +118,21 @@ export default function ChatExampleData(store: Store<AppState>) {
   store.dispatch(threadActions.addMessage(tWait, {
     author: wait,
     sentAt: moment().subtract(4, 'minutes').toDate(),
-    text: `I\'ll wait however many seconds you send to me before responding. Try sending '3'`
+    text: `I\'ll wait however many seconds you send to me before responding.` +
+          ` Try sending '3'`
   }));
 
   // select the first thread
   store.dispatch(threadActions.select(tLadycap));
 
-  // watch the new messages
+  // Now we set up the "bots". We do this by watching for new messages and
+  // depending on which thread the message was sent to, the bot will respond
+  // in kind.
   store.let(getMessages())
   .filter(message => message.author.id === me.id)
   .subscribe(message => {
     switch (message.thread.id) {
-      case tEcho.id: {
-
+      case tEcho.id:
         // echo back the same message to the user
         store.dispatch(threadActions.addMessage(tEcho, {
           author: echo,
@@ -132,9 +140,7 @@ export default function ChatExampleData(store: Store<AppState>) {
         }));
 
         break;
-      }
-      case tRev.id: {
-
+      case tRev.id:
         // echo back the message reveresed to the user
         store.dispatch(threadActions.addMessage(tRev, {
           author: rev,
@@ -142,9 +148,7 @@ export default function ChatExampleData(store: Store<AppState>) {
         }));
 
         break;
-      }
-      case tWait.id: {
-
+      case tWait.id:
         let waitTime: number = parseInt(message.text, 10);
         let reply: string;
 
@@ -165,10 +169,8 @@ export default function ChatExampleData(store: Store<AppState>) {
           waitTime * 1000);
 
         break;
-      }
-      default: {
+      default:
         break;
-      }
     }
   })
 

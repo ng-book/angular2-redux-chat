@@ -8,14 +8,11 @@
 
 import {
   Component,
-  ChangeDetectionStrategy,
   ElementRef
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import {
   User,
-  Message,
   Thread
 } from '../models';
 import {
@@ -29,6 +26,9 @@ import {
 } from '../reducers';
 import ChatMessage from '../components/ChatMessage';
 
+/**
+ * ChatWindow is the container which handles the current chat
+ */
 @Component({
   selector: 'chat-window',
   directives: [ChatMessage],
@@ -79,9 +79,9 @@ import ChatMessage from '../components/ChatMessage';
   `
 })
 export default class ChatWindow {
-  currentThread: Thread;
-  draftMessage: {text: string};
-  currentUser: User;
+  currentThread : Thread;
+  draftMessage : {text : string};
+  currentUser : User;
 
   constructor(private store: Store<AppState>,
               private threadActions: ThreadActions,
@@ -112,7 +112,7 @@ export default class ChatWindow {
   scrollToBottom(): void {
     let scrollPane: any = this.el
       .nativeElement.querySelector('.msg-container-base');
-    if(scrollPane) {
+    if (scrollPane) {
       setTimeout(() => scrollPane.scrollTop = scrollPane.scrollHeight);
     }
   }

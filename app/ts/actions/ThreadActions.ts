@@ -18,7 +18,6 @@ import {
  * ThreadActions specifies _action creators_ (i.e. objects that describe
  * changes to the reducers) that are concerned with Threads and Messages
  */
-
 @Injectable()
 export class ThreadActions {
   static ADD_THREAD = '[Thread] Add';
