@@ -24,7 +24,8 @@ import {
 import {
   AppState,
   getCurrentThread,
-  getCurrentUser
+  getCurrentUser,
+  getMessages
 } from '../reducers';
 import ChatMessage from '../components/ChatMessage';
 
@@ -87,34 +88,10 @@ export default class ChatWindow {
               private el: ElementRef) {
     store.let(getCurrentThread()).subscribe((t) => this.currentThread = t);
     store.let(getCurrentUser()).subscribe((u) => this.currentUser = u);
+    store.let(getMessages()).subscribe( _ => this.scrollToBottom() );
     this.draftMessage = { text: '' };
   }
 
-  // ngOnInit(): void {
-  //   this.messages = this.threadsService.currentThreadMessages;
-  //
-  //   this.draftMessage = new Message();
-  //
-  //   this.threadsService.currentThread.subscribe(
-  //     (thread: Thread) => {
-  //       this.currentThread = thread;
-  //     });
-  //
-  //   this.userService.currentUser
-  //     .subscribe(
-  //       (user: User) => {
-  //         this.currentUser = user;
-  //       });
-  //
-  //   this.messages
-  //     .subscribe(
-  //       (messages: Array<Message>) => {
-  //         setTimeout(() => {
-  //           this.scrollToBottom();
-  //         });
-  //       });
-  // }
-  //
   onEnter(event: any): void {
     this.sendMessage();
     event.preventDefault();
@@ -129,11 +106,14 @@ export default class ChatWindow {
         text: this.draftMessage.text
       }
     ));
+    this.draftMessage = { text: '' };
   }
 
   scrollToBottom(): void {
     let scrollPane: any = this.el
       .nativeElement.querySelector('.msg-container-base');
-    scrollPane.scrollTop = scrollPane.scrollHeight;
+    if(scrollPane) {
+      setTimeout(() => scrollPane.scrollTop = scrollPane.scrollHeight);
+    }
   }
 }

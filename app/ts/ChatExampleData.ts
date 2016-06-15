@@ -121,7 +121,7 @@ export default function ChatExampleData(store: Store<AppState>) {
   // select the first thread
   store.dispatch(threadActions.select(tLadycap));
 
-
+  // watch the new messages
   store.let(getMessages())
   .filter(message => message.author.id === me.id)
   .subscribe(message => {
