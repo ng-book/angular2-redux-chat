@@ -10,19 +10,38 @@ import {
   Component
 } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { Store, provideStore } from '@ngrx/store';
+import { createStore, applyMiddleware, compose } from 'redux';
+
+let reducer = (state = {counter: 0}, action: any = {}) => {
+  switch (action.type) {
+  case 'INCREMENT':
+    return Object.assign({}, state, {counter: state.counter + 1});
+  default:
+    return state;
+  }
+};
+
+let store = createStore(
+  reducer,
+  compose(
+    window['devToolsExtension'] ? window['devToolsExtension']() : f => f
+  ));
+
+console.log('store', store);
+console.log(store.getState());
+
 
 /*
  * Components
  */
-import ChatPage from './pages/ChatPage';
+// import ChatPage from './pages/ChatPage';
 // import {ChatNavBar} from './components/ChatNavBar';
 // import {ChatThreads} from './components/ChatThreads';
 // import {ChatWindow} from './components/ChatWindow';
 
-import ChatExampleData from './ChatExampleData';
-import reducer, { AppState } from './reducers';
-import actions from './actions';
+// import ChatExampleData from './ChatExampleData';
+// import reducer, { AppState } from './reducers';
+// import actions from './actions';
 
 // import { messages } from './reducers/messages';
 
@@ -33,22 +52,23 @@ require('../css/styles.scss');
 
 @Component({
   selector: 'chat-app',
-  directives: [ChatPage],
+  // directives: [ChatPage],
   template: `
   <div>
+    hello
     <chat-page></chat-page>
   </div>
   `
 })
 class ChatApp {
-  constructor(private store: Store<AppState>) {
-    ChatExampleData(store);
+  constructor() {
+    // ChatExampleData(store);
   }
 }
 
 bootstrap(ChatApp, [
-  provideStore(reducer),
-  actions
+  // provideStore(reducer),
+  // actions
 ])
 .catch(err => console.error(err));
 
@@ -56,17 +76,17 @@ bootstrap(ChatApp, [
 // You can ignore these 'require' statements. The code will work without them.
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
-require('./pages/ChatPage');
-require('./reducers');
-require('./reducers/ThreadsReducer');
-require('./models');
-require('./models/User');
-require('./models/Message');
-require('./models/Thread');
-require('./actions');
-require('./ChatExampleData');
-require('./containers/ChatWindow');
-require('./containers/ChatThreads');
-require('./containers/ChatNavBar');
-require('./components/ChatThread');
-require('./components/ChatMessage');
+// require('./pages/ChatPage');
+// require('./reducers');
+// require('./reducers/ThreadsReducer');
+// require('./models');
+// require('./models/User');
+// require('./models/Message');
+// require('./models/Thread');
+// require('./actions');
+// require('./ChatExampleData');
+// require('./containers/ChatWindow');
+// require('./containers/ChatThreads');
+// require('./containers/ChatNavBar');
+// require('./components/ChatThread');
+// require('./components/ChatMessage');

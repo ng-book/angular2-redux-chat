@@ -10,17 +10,51 @@ import {
   Component
 } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import MinimalCounterApp from './counter';
+import { createStore, Store, compose, applyMiddleware, Middleware, MiddlewareAPI, Dispatch, StoreEnhancer } from 'redux';
+import { AppStore } from './app-store';
+import { AppState } from './app-state';
+import { counterReducer } from './counter-reducer';
+import CounterComponent from './CounterComponent';
+
+let devtools: StoreEnhancer<AppState> = window['devToolsExtension'] ?
+               window['devToolsExtension']() : f => f;
+
+// const devtoolsMiddleware = (a: AppState): AppState => devtools(a) as AppState;
+
+const loggerMiddleware: Middleware =
+  <S>({getState}: MiddlewareAPI<S>) =>
+    (next: Dispatch<S>) =>
+      (action: any): any => {
+        console.log('will dispatch', action)
+
+        // Call the next dispatch method in the middleware chain.
+        const returnValue = next(action)
+
+        console.log('state after dispatch', getState())
+
+        // This will likely be the action itself, unless
+        // a middleware further in chain changed it.
+        return returnValue
+      }
+
+let store: Store<AppState> = createStore<AppState>(
+  counterReducer,
+  // applyMiddleware(loggerMiddleware)
+  compose(devtools)
+  // compose(devtoolsMiddleware) as (a: AppState) => AppState
+);
+
+console.log('hello', store, store.getState());
 
 @Component({
-  selector: 'minimal-ngrx-app',
+  selector: 'minimal-redux-app',
   directives: [
-    MinimalCounterApp
+    // MinimalCounterApp
   ],
   template: `
   <div>
-    <minimal-counter-app>
-    </minimal-counter-app>
+    <counter-component>
+    </counter-component>
   </div>
   `
 })
@@ -39,7 +73,10 @@ bootstrap(MinimalApp, [
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
 require('../app/ts/vendor');
-require('./counter');
+require('./app-store');
+require('./app-state');
+require('./counter-reducer');
+require('./CounterComponent');
 // require('./services/services');
 // require('./ChatExampleData');
 // require('./util/util');
