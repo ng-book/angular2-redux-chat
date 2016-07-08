@@ -59,10 +59,3 @@ require('./app-state');
 require('./counter-reducer');
 require('./counter-action-creators');
 require('./CounterComponent');
-// require('./services/services');
-// require('./ChatExampleData');
-// require('./util/util');
-// require('./components/ChatNavBar');
-// require('./components/ChatWindow');
-// require('./components/ChatThreads');
-
