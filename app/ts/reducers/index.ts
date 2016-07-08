@@ -29,7 +29,7 @@ export interface AppState {
   threads: ThreadsState;
 }
 
-const rootReducer: Reducer<AppState> = combineReducers({
+const rootReducer: Reducer<AppState> = combineReducers<AppState>({
   users: UsersReducer,
   threads: ThreadsReducer
 });
