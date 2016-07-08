@@ -10,26 +10,24 @@ import {
   Component
 } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { createStore, applyMiddleware, compose } from 'redux';
+import {
+  createStore,
+  Store,
+  compose,
+  StoreEnhancer
+} from 'redux';
 
-let reducer = (state = {counter: 0}, action: any = {}) => {
-  switch (action.type) {
-  case 'INCREMENT':
-    return Object.assign({}, state, {counter: state.counter + 1});
-  default:
-    return state;
-  }
-};
+import { AppStore } from './app-store';
+import { AppState, default as reducer } from './reducers';
 
-let store = createStore(
+let devtools: StoreEnhancer<AppState> =
+  window['devToolsExtension'] ?
+  window['devToolsExtension']() : f => f;
+
+let store: Store<AppState> = createStore<AppState>(
   reducer,
-  compose(
-    window['devToolsExtension'] ? window['devToolsExtension']() : f => f
-  ));
-
-console.log('store', store);
-console.log(store.getState());
-
+  compose(devtools)
+);
 
 /*
  * Components
@@ -55,7 +53,7 @@ require('../css/styles.scss');
   // directives: [ChatPage],
   template: `
   <div>
-    hello
+    hello you
     <chat-page></chat-page>
   </div>
   `
@@ -76,14 +74,18 @@ bootstrap(ChatApp, [
 // You can ignore these 'require' statements. The code will work without them.
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
+require('./app-store');
 // require('./pages/ChatPage');
-// require('./reducers');
-// require('./reducers/ThreadsReducer');
-// require('./models');
-// require('./models/User');
-// require('./models/Message');
-// require('./models/Thread');
-// require('./actions');
+require('./reducers');
+require('./reducers/UsersReducer');
+require('./reducers/ThreadsReducer');
+require('./models');
+require('./models/User');
+require('./models/Message');
+require('./models/Thread');
+require('./actions');
+require('./actions/UserActions');
+require('./actions/ThreadActions');
 // require('./ChatExampleData');
 // require('./containers/ChatWindow');
 // require('./containers/ChatThreads');

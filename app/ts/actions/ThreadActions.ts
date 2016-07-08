@@ -6,8 +6,10 @@
  *
  */
 
-import { Injectable } from '@angular/core';
-import { Action } from '@ngrx/store';
+import {
+  Action,
+  ActionCreator
+} from 'redux';
 import { uuid } from '../util/uuid';
 import {
   User,
@@ -18,48 +20,53 @@ import {
  * ThreadActions specifies _action creators_ (i.e. objects that describe
  * changes to the reducers) that are concerned with Threads and Messages
  */
-@Injectable()
-export class ThreadActions {
-  static ADD_THREAD = '[Thread] Add';
-  add(thread: Thread): Action {
-    return {
-      type: ThreadActions.ADD_THREAD,
-      payload: thread
-    };
-  }
+export const ADD_THREAD = '[Thread] Add';
+export interface AddThreadAction extends Action {
+  thread: Thread;
+}
+export const addThread: ActionCreator<AddThreadAction> =
+  (thread) => ({
+    type: ADD_THREAD,
+    thread: thread
+  });
 
-  static ADD_MESSAGE = '[Thread] Add Message';
-  addMessage(thread: Thread, messageArgs: {
-    id?: string,
-    sentAt?: Date,
-    isRead?: boolean,
-    thread?: Thread,
-    author: User,
-    text: string
-  }): Action {
+export const ADD_MESSAGE = '[Thread] Add Message';
+interface AddMessageArgs {
+  id?: string;
+  sentAt?: Date;
+  isRead?: boolean;
+  thread?: Thread;
+  author: User;
+  text: string;
+}
+export interface AddMessageAction extends Action {
+  thread: Thread;
+  messageArgs: AddMessageArgs;
+}
+export const addMessage: ActionCreator<AddMessageAction> =
+  (thread: Thread, messageArgs: AddMessageArgs): AddMessageAction => {
     const defaults = {
       id: uuid(),
       sentAt: new Date(),
       isRead: false,
       thread: thread
     };
-    const message = Object.assign({}, defaults, messageArgs);
+    const message: AddMessageArgs = Object.assign({}, defaults, messageArgs);
 
     return {
-      type: ThreadActions.ADD_MESSAGE,
-      payload: {
-        thread: thread,
-        message: message
-      }
-    };
-  }
+      type: ADD_MESSAGE,
+      thread: thread,
+      messageArgs: message
 
-  static SELECT_THREAD = '[Thread] SELECT';
-  select(thread: Thread): Action {
-    return {
-      type: ThreadActions.SELECT_THREAD,
-      payload: thread
     };
-  }
+  };
 
+export const SELECT_THREAD = '[Thread] Select';
+export interface SelectThreadAction extends Action {
+  thread: Thread;
 }
+export const selectThread: ActionCreator<SelectThreadAction> =
+  (thread) => ({
+    type: SELECT_THREAD,
+    thread: thread
+  });

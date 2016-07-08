@@ -6,8 +6,10 @@
  *
  */
 
-import { Injectable } from '@angular/core';
-import { Action } from '@ngrx/store';
+import {
+  Action,
+  ActionCreator
+} from 'redux';
 import {
   User
 } from '../models';
@@ -15,14 +17,12 @@ import {
 /**
  * UserActions specifies action creators concerning Users
  */
-@Injectable()
-export class UserActions {
-  static SET_CURRENT = '[User] SET_CURRENT';
-  setCurrent(user: User): Action {
-    return {
-      type: UserActions.SET_CURRENT,
-      payload: user
-    };
-  }
-
+export const SET_CURRENT_USER = '[User] SET_CURRENT';
+export interface SetCurrentUserAction extends Action {
+  user: User;
 }
+export const setCurrentUser: ActionCreator<SetCurrentUserAction> =
+  (user) => ({
+    type: SET_CURRENT_USER,
+    user: user
+  });
