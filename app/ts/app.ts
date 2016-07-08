@@ -37,7 +37,7 @@ let store: Store<AppState> = createStore<AppState>(
 // import {ChatThreads} from './components/ChatThreads';
 // import {ChatWindow} from './components/ChatWindow';
 
-// import ChatExampleData from './ChatExampleData';
+import ChatExampleData from './ChatExampleData';
 // import reducer, { AppState } from './reducers';
 // import actions from './actions';
 
@@ -60,7 +60,7 @@ require('../css/styles.scss');
 })
 class ChatApp {
   constructor() {
-    // ChatExampleData(store);
+    ChatExampleData(store);
   }
 }
 
@@ -86,7 +86,7 @@ require('./models/Thread');
 require('./actions');
 require('./actions/UserActions');
 require('./actions/ThreadActions');
-// require('./ChatExampleData');
+require('./ChatExampleData');
 // require('./containers/ChatWindow');
 // require('./containers/ChatThreads');
 // require('./containers/ChatNavBar');
