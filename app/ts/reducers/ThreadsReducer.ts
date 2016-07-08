@@ -170,21 +170,3 @@ export const getAllMessages = createSelector(
     threads.reduce( // gather all messages
       (messages, thread) => [...messages, ...thread.messages],
       []).sort((m1, m2) => m1.sentAt - m2.sentAt)); // sort them by time
-
-
-// /**
-//  * This selector will emit once for every new message.
-//  *
-//  * It's a bit of a hack in that the `distinctKey` below will keep an internal
-//  * hash of the message ids that it has seen. In a real app you'd want to clear
-//  * that internal cache if you have a large number of messages.
-//  */
-// export function getMessages() {
-//   return (state$: Observable<ThreadsState>) => state$
-//     .let(getAllThreads())
-//     .select(threads => threads.reduce( // gather all messages
-//       (messages, thread) => [...messages, ...thread.messages],
-//       []).sort((m1, m2) => m1.sentAt - m2.sentAt)) // sort them by time
-//     .flatMap(message => message) // emit once each message
-//     .distinctKey('id'); // and distinct on id (memory leak!, yolo)
-// }

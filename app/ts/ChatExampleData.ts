@@ -1,6 +1,7 @@
 import { Store } from 'redux';
 import {
-  AppState
+  AppState,
+  getAllMessages
 } from './reducers';
 import { uuid } from './util/uuid';
 import * as moment from 'moment';
@@ -122,54 +123,71 @@ export default function ChatExampleData(store: Store<AppState>) {
   // select the first thread
   store.dispatch(ThreadActions.selectThread(tLadycap));
 
-//   // Now we set up the "bots". We do this by watching for new messages and
-//   // depending on which thread the message was sent to, the bot will respond
-//   // in kind.
-//   store.let(getMessages())
-//   .filter(message => message.author.id === me.id)
-//   .subscribe(message => {
-//     switch (message.thread.id) {
-//       case tEcho.id:
-//         // echo back the same message to the user
-//         store.dispatch(threadActions.addMessage(tEcho, {
-//           author: echo,
-//           text: message.text
-//         }));
+  // Now we set up the "bots". We do this by watching for new messages and
+  // depending on which thread the message was sent to, the bot will respond
+  // in kind.
 
-//         break;
-//       case tRev.id:
-//         // echo back the message reveresed to the user
-//         store.dispatch(threadActions.addMessage(tRev, {
-//           author: rev,
-//           text: message.text.split('').reverse().join('')
-//         }));
+  let handledMessages = {};
 
-//         break;
-//       case tWait.id:
-//         let waitTime: number = parseInt(message.text, 10);
-//         let reply: string;
+  store.subscribe( () => {
+    getAllMessages(store.getState())
+      // bots only respond to messages sent by the user, so
+      // only keep messages sent by the current user
+      .filter(message => message.author.id === me.id)
+      .map(message => {
 
-//         if (isNaN(waitTime)) {
-//           waitTime = 0;
-//           reply = `I didn\'t understand ${message}. Try sending me a number`;
-//         } else {
-//           reply = `I waited ${waitTime} seconds to send you this.`;
-//         }
+        // This is a bit of a hack and we're stretching the limits of a faux
+        // chat app. Every time there is a new message, we only want to keep the
+        // new ones. This is a case where some sort of queue would be a better
+        // model
+        if (handledMessages.hasOwnProperty(message.id)) {
+          return;
+        }
+        handledMessages[message.id] = true;
 
-//         setTimeout(
-//           () => {
-//             store.dispatch(threadActions.addMessage(tWait, {
-//               author: wait,
-//               text: reply
-//             }));
-//           },
-//           waitTime * 1000);
+        switch (message.thread.id) {
+          case tEcho.id:
+            // echo back the same message to the user
+            store.dispatch(ThreadActions.addMessage(tEcho, {
+              author: echo,
+              text: message.text
+            }));
 
-//         break;
-//       default:
-//         break;
-//     }
-//   });
+            break;
+          case tRev.id:
+            // echo back the message reveresed to the user
+            store.dispatch(ThreadActions.addMessage(tRev, {
+              author: rev,
+              text: message.text.split('').reverse().join('')
+            }));
+
+            break;
+          case tWait.id:
+            let waitTime: number = parseInt(message.text, 10);
+            let reply: string;
+
+            if (isNaN(waitTime)) {
+              waitTime = 0;
+              reply = `I didn\'t understand ${message}. Try sending me a number`;
+            } else {
+              reply = `I waited ${waitTime} seconds to send you this.`;
+            }
+
+            setTimeout(
+              () => {
+                store.dispatch(ThreadActions.addMessage(tWait, {
+                  author: wait,
+                  text: reply
+                }));
+              },
+              waitTime * 1000);
+
+            break;
+          default:
+            break;
+        }
+      });
+  });
 
 
 }

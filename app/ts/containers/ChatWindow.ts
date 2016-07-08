@@ -23,8 +23,7 @@ import {
 import {
   AppState,
   getCurrentThread,
-  getCurrentUser,
-  // getMessages
+  getCurrentUser
 } from '../reducers';
 import ChatMessage from '../components/ChatMessage';
 
@@ -97,7 +96,7 @@ export default class ChatWindow {
     let state = this.store.getState();
     this.currentThread = getCurrentThread(state);
     this.currentUser = getCurrentUser(state);
-    // store.let(getMessages()).subscribe( _ => this.scrollToBottom() );
+    this.scrollToBottom();
   }
 
   onEnter(event: any): void {
@@ -118,10 +117,10 @@ export default class ChatWindow {
   }
 
   scrollToBottom(): void {
-    // let scrollPane: any = this.el
-    //   .nativeElement.querySelector('.msg-container-base');
-    // if (scrollPane) {
-    //   setTimeout(() => scrollPane.scrollTop = scrollPane.scrollHeight);
-    // }
+    let scrollPane: any = this.el
+      .nativeElement.querySelector('.msg-container-base');
+    if (scrollPane) {
+      setTimeout(() => scrollPane.scrollTop = scrollPane.scrollHeight);
+    }
   }
 }
