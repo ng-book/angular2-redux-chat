@@ -6,8 +6,18 @@
  *
  */
 import {
-  Component
+  Component,
+  Inject
 } from '@angular/core';
+import {
+  createStore,
+  Store,
+  compose,
+  StoreEnhancer
+} from 'redux';
+import { AppStore } from './app-store';
+import { AppState } from './app-state';
+import * as CounterActions from './counter-action-creators';
 
 @Component({
   selector: 'counter-component',
@@ -22,7 +32,7 @@ import {
 
             <p>
               The counter value is:
-              <b>{{counter$ | async}}</b>
+              <b>{{ counter }}</b>
             </p>
 
             <p>
@@ -38,18 +48,23 @@ import {
   `
 })
 export default class CounterComponent {
-  // counter$: Observable<number>;
+  counter: number;
 
-  // constructor() {
-  //   // https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/select.md
-  //   this.counter$ = store.map<number>(currentState => currentState);
-  // }
+  constructor(@Inject(AppStore) private store: Store<AppState>) {
+    store.subscribe(() => this.readState());
+    this.readState();
+  }
 
-  // increment() {
-  //   store.dispatch({ type: 'INCREMENT' });
-  // }
+  readState() {
+    let state: AppState = this.store.getState() as AppState;
+    this.counter = state.counter;
+  }
 
-  // decrement() {
-  //   store.dispatch({ type: 'DECREMENT' });
-  // }
+  increment() {
+    this.store.dispatch(CounterActions.increment());
+  }
+
+  decrement() {
+    this.store.dispatch(CounterActions.decrement());
+  }
 }
