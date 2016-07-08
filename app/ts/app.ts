@@ -7,7 +7,9 @@
  */
 
 import {
-  Component
+  Inject,
+  Component,
+  provide
 } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import {
@@ -16,9 +18,29 @@ import {
   compose,
   StoreEnhancer
 } from 'redux';
-
 import { AppStore } from './app-store';
-import { AppState, default as reducer } from './reducers';
+import {
+  AppState,
+  default as reducer
+} from './reducers';
+import ChatPage from './pages/ChatPage';
+import ChatExampleData from './ChatExampleData';
+require('../css/styles.scss');
+
+@Component({
+  selector: 'chat-app',
+  directives: [ ChatPage ],
+  template: `
+  <div>
+    <chat-page></chat-page>
+  </div>
+  `
+})
+class ChatApp {
+  constructor(@Inject(AppStore) private store: Store<AppState>) {
+    ChatExampleData(store);
+  }
+}
 
 let devtools: StoreEnhancer<AppState> =
   window['devToolsExtension'] ?
@@ -29,44 +51,8 @@ let store: Store<AppState> = createStore<AppState>(
   compose(devtools)
 );
 
-/*
- * Components
- */
-// import ChatPage from './pages/ChatPage';
-// import {ChatNavBar} from './components/ChatNavBar';
-// import {ChatThreads} from './components/ChatThreads';
-// import {ChatWindow} from './components/ChatWindow';
-
-import ChatExampleData from './ChatExampleData';
-// import reducer, { AppState } from './reducers';
-// import actions from './actions';
-
-// import { messages } from './reducers/messages';
-
-/*
- * Webpack
- */
-require('../css/styles.scss');
-
-@Component({
-  selector: 'chat-app',
-  // directives: [ChatPage],
-  template: `
-  <div>
-    hello you
-    <chat-page></chat-page>
-  </div>
-  `
-})
-class ChatApp {
-  constructor() {
-    ChatExampleData(store);
-  }
-}
-
 bootstrap(ChatApp, [
-  // provideStore(reducer),
-  // actions
+  provide(AppStore, { useFactory: () => store }),
 ])
 .catch(err => console.error(err));
 
@@ -75,7 +61,6 @@ bootstrap(ChatApp, [
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
 require('./app-store');
-// require('./pages/ChatPage');
 require('./reducers');
 require('./reducers/UsersReducer');
 require('./reducers/ThreadsReducer');
@@ -87,8 +72,9 @@ require('./actions');
 require('./actions/UserActions');
 require('./actions/ThreadActions');
 require('./ChatExampleData');
-// require('./containers/ChatWindow');
-// require('./containers/ChatThreads');
-// require('./containers/ChatNavBar');
-// require('./components/ChatThread');
-// require('./components/ChatMessage');
+require('./pages/ChatPage');
+require('./containers/ChatNavBar');
+require('./containers/ChatWindow');
+require('./containers/ChatThreads');
+require('./components/ChatThread');
+require('./components/ChatMessage');

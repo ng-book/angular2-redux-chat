@@ -17,7 +17,7 @@ import {
 /**
  * UserActions specifies action creators concerning Users
  */
-export const SET_CURRENT_USER = '[User] SET_CURRENT';
+export const SET_CURRENT_USER = '[User] Set Current';
 export interface SetCurrentUserAction extends Action {
   user: User;
 }

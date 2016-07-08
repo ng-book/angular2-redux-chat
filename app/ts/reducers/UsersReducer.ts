@@ -9,6 +9,7 @@
 import { Action } from 'redux';
 import { User } from '../models';
 import { UserActions } from '../actions';
+import { createSelector } from 'reselect';
 
 /**
  * This file describes the state concerning Users, how to modify it through
@@ -34,3 +35,9 @@ export const UsersReducer =
       return state;
   }
 };
+
+export const getUsersState = (state): UsersState => state.users;
+
+export const getCurrentUser = createSelector(
+  getUsersState,
+  ( state: UsersState ) => state.currentUser );

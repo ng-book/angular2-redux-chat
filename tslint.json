@@ -36,7 +36,7 @@
     "no-eval": true,
     "no-require-imports": false,
     "no-shadowed-variable": true,
-    "no-string-literal": true,
+    "no-string-literal": false,
     "no-switch-case-fall-through": false,
     "trailing-comma": false,
     "no-trailing-whitespace": true,

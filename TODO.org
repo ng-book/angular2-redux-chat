@@ -1,0 +1,2 @@
+* mention normalizr
+* can we get rid of users reducer and state?

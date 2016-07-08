@@ -16,13 +16,15 @@ import {
   UsersState,
   UsersReducer
 } from './UsersReducer.ts';
-import * as users from './UsersReducer.ts';
+// import * as users from './UsersReducer.ts';
+export * from './UsersReducer.ts';
 
 import {
   ThreadsState,
   ThreadsReducer
 } from './ThreadsReducer.ts';
-import * as threads from './ThreadsReducer.ts';
+// import * as threads from './ThreadsReducer.ts';
+export * from './ThreadsReducer.ts';
 
 export interface AppState {
   users: UsersState;

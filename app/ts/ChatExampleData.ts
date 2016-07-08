@@ -80,50 +80,47 @@ let tWait: Thread = {
 
 export default function ChatExampleData(store: Store<AppState>) {
 
-//   const threadActions = new ThreadActions();
-//   const userActions = new UserActions();
-
-//   // set the current User
+  // set the current User
   store.dispatch(UserActions.setCurrentUser(me));
 
-//   // create a new thread and add messages
-//   store.dispatch(threadActions.add(tLadycap));
-//   store.dispatch(threadActions.addMessage(tLadycap, {
-//     author: me,
-//     sentAt: moment().subtract(45, 'minutes').toDate(),
-//     text: 'Yet let me weep for such a feeling loss.'
-//   }));
-//   store.dispatch(threadActions.addMessage(tLadycap, {
-//     author: ladycap,
-//     sentAt: moment().subtract(20, 'minutes').toDate(),
-//     text: 'So shall you feel the loss, but not the friend which you weep for.'
-//   }));
+  // create a new thread and add messages
+  store.dispatch(ThreadActions.addThread(tLadycap));
+  store.dispatch(ThreadActions.addMessage(tLadycap, {
+    author: me,
+    sentAt: moment().subtract(45, 'minutes').toDate(),
+    text: 'Yet let me weep for such a feeling loss.'
+  }));
+  store.dispatch(ThreadActions.addMessage(tLadycap, {
+    author: ladycap,
+    sentAt: moment().subtract(20, 'minutes').toDate(),
+    text: 'So shall you feel the loss, but not the friend which you weep for.'
+  }));
 
-//   // create a few more threads
-//   store.dispatch(threadActions.add(tEcho));
-//   store.dispatch(threadActions.addMessage(tEcho, {
-//     author: echo,
-//     sentAt: moment().subtract(1, 'minutes').toDate(),
-//     text: 'I\'ll echo whatever you send me'
-//   }));
+  // create a few more threads
+  store.dispatch(ThreadActions.addThread(tEcho));
+  store.dispatch(ThreadActions.addMessage(tEcho, {
+    author: echo,
+    sentAt: moment().subtract(1, 'minutes').toDate(),
+    text: 'I\'ll echo whatever you send me'
+  }));
 
-//   store.dispatch(threadActions.add(tRev));
-//   store.dispatch(threadActions.addMessage(tRev, {
-//     author: rev,
-//     sentAt: moment().subtract(3, 'minutes').toDate(),
-//     text: 'I\'ll reverse whatever you send me'
-//   }));
+  store.dispatch(ThreadActions.addThread(tRev));
+  store.dispatch(ThreadActions.addMessage(tRev, {
+    author: rev,
+    sentAt: moment().subtract(3, 'minutes').toDate(),
+    text: 'I\'ll reverse whatever you send me'
+  }));
 
-//   store.dispatch(threadActions.add(tWait));
-//   store.dispatch(threadActions.addMessage(tWait, {
-//     author: wait,
-//     sentAt: moment().subtract(4, 'minutes').toDate(),
-//     text: `I\'ll wait however many seconds you send to me before responding.` +
-//           ` Try sending '3'`
-//   }));
+  store.dispatch(ThreadActions.addThread(tWait));
+  store.dispatch(ThreadActions.addMessage(tWait, {
+    author: wait,
+    sentAt: moment().subtract(4, 'minutes').toDate(),
+    text: `I\'ll wait however many seconds you send to me before responding.` +
+      ` Try sending '3'`
+  }));
 
-//   // select the first thread
-//   store.dispatch(threadActions.select(tLadycap));
+  // select the first thread
+  store.dispatch(ThreadActions.selectThread(tLadycap));
 
 //   // Now we set up the "bots". We do this by watching for new messages and
 //   // depending on which thread the message was sent to, the bot will respond
