@@ -32,7 +32,7 @@ import ChatMessage from '../components/ChatMessage';
  */
 @Component({
   selector: 'chat-window',
-  directives: [ChatMessage],
+  directives: [ ChatMessage ],
   template: `
     <div class="chat-window-container">
       <div class="chat-window">
