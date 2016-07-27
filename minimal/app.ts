@@ -53,7 +53,7 @@ bootstrap(MinimalApp, [
 // You can ignore these 'require' statements. The code will work without them.
 // They're currently required to get watch-reloading
 // from webpack, but removing them is a TODO
-require('../app/ts/vendor');
+// require('../app/ts/vendor');
 require('./app-store');
 require('./app-state');
 require('./counter-reducer');
