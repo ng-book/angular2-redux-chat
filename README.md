@@ -1,32 +1,36 @@
 <p align="center">
-  <img src="app/images/logos/Angular2RxJSChatHeaderImage.png" alt="Angular 2 RxJS Chat" width="500" height="300"/>
+  <img src="app/images/logos/Angular2ReduxChatHeaderImage.png" alt="Angular 2 Redux Chat" width="500" height="300"/>
 </p>
 
-# Angular 2 RxJS Chat [![Join the chat at https://gitter.im/ng-book/ng-book](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ng-book/ng-book?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Angular 2 Redux Chat [![Join the chat at https://gitter.im/ng-book/ng-book](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ng-book/ng-book?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-> An Angular 2 chat app using [Angular 2](https://angular.io/), [RxJS](https://github.com/Reactive-Extensions/RxJS), [Webpack](https://webpack.github.io/), [TypeScript](http://www.typescriptlang.org/), Services, Injectables, [Karma](http://karma-runner.github.io/), Forms, [SCSS](http://sass-lang.com/), and [tslint](http://palantir.github.io/tslint/) by the [ng-book 2 team](https://ng-book.com/2)
+> An Angular 2 chat app using [Angular 2](https://angular.io/), [Redux](https://github.com/reactjs/redux), [Webpack](https://webpack.github.io/), [TypeScript](http://www.typescriptlang.org/), Services, Injectables, [Karma](http://karma-runner.github.io/), Forms, [SCSS](http://sass-lang.com/), and [tslint](http://palantir.github.io/tslint/) by the [ng-book 2 team](https://ng-book.com/2)
 
-This repo shows an example chat application using RxJS and Angular 2. The goal is to show how to use the Observables data architecture pattern within Angular 2. It also features:
+This repo shows an example chat application using Redux and Angular 2. The goal is to show how to use the Redux data architecture pattern within Angular 2, using the core Redux library. It also features:
 
+* A step-by-step tutorial on how to write a [minimal Redux clone in Typescript](minimal/tutorial)
+* How to write a [minimal counter app with Redux and Angular 2](minimal)
 * Webpack configuration with TypeScript, Karma, SCSS, and tslint
-* Writing async components that work with RxJS
 * How to write injectable services in Angular 2
+* How to separate presentational vs. container components
+* Using action creators
+* How to compose reducers
 * And much more
 
 <p align="center">
-  <img src="app/images/readme/full-chat-preview.png" alt="Angular 2 RxJS Chat" width="800" height="577"/>
+  <img src="app/images/readme/full-chat-preview.png" alt="Angular 2 Redux Chat" width="800" height="577"/>
 </p>
 
-> Try the live [demo here](http://rxjs.ng-book.com)
+> Try the live [demo here](http://redux-chat.ng-book.com)
 
 ## Quick start
 
 ```bash
 # clone the repo
-git clone https://github.com/ng-book/angular2-rxjs-chat.git 
+git clone https://github.com/ng-book/angular2-redux-chat.git 
 
 # change into the repo directory
-cd angular2-rxjs-chat
+cd angular2-redux-chat
 
 # install 
 npm install
@@ -41,19 +45,18 @@ Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
 The app has three models:
 
-* [`Message`](app/ts/models.ts#L27) - holds individual chat messages
-* [`Thread`](app/ts/models.ts#L12) - holds metadata for a group of `Message`s
-* [`User`](app/ts/models.ts#L3) - holds data about an individual user
+* [`Message`](app/ts/models/Message.ts) - holds individual chat messages
+* [`Thread`](app/ts/models/Thread.ts) - holds metadata for a group of `Message`s
+* [`User`](app/ts/models/User.ts) - holds data about an individual user
 
 <p align="center">
-  <img src="app/images/readme/rx-chat-models.png" alt="Model Diagram" width="500" height="119"/>
+  <img src="app/images/readme/redux-chat-models.png" alt="Model Diagram" width="500" height="119"/>
 </p>
 
-And there are three services, one for each model:
+There are two reducers:
 
-* [`MessagesService`](app/ts/services/MessagesService.ts) - manages streams of `Message`s
-* [`ThreadsService`](app/ts/services/ThreadsService.ts) - manages streams of `Thread`s
-* [`UserService`](app/ts/services/UserService.ts) - manages a stream of the current `User`
+* [`ThreadsReducer`](app/ts/reducers/ThreadsReducer.ts) - manages the `Thread`s and their `Message`s
+* [`UsersReducer`](app/ts/reducers/UserReducer.ts) - manages the current `User`
 
 There are also three top-level components:
 
@@ -62,22 +65,76 @@ There are also three top-level components:
 * [`ChatWindow`](app/ts/components/ChatWindow.ts) - where we hold our current conversation
 
 <p align="center">
-  <img src="app/images/readme/rx-chat-top-level-components.png" alt="Angular 2 RxJS Chat" width="500" height="360"/>
+  <img src="app/images/readme/redux-chat-top-level-components.png" alt="Angular 2 Redux Chat" width="500" height="360"/>
 </p>
 
-## Services Manage Observables
+## Components Subscribe to the Store
 
-Each service publishes data as RxJS streams. The service clients subscribe to these streams to be notified of changes. 
+In this project, we're using the [official Redux library](https://github.com/reactjs/redux) instead of a wrapper or Redux-inspired spin-off. At the top of our app we create a new Redux Store and [provide it to the dependency injection system](app/ts/app.ts#L55). This let's us inject it into our components.
 
-The `MessagesService` is the backbone of the application. All new messages are added to the `newMessages` stream and, more or less, all streams are derived from listening to `newMessages`. Even the `Thread`s exposed by the `ThreadsService` are created by listening to the stream of `Message`s.
+Our [container components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.a2dspl7hn) inject the Redux Store and subscribe to any changes. Consider this excerpt from the nav-bar which keeps the count of unread messages:
 
-There are several other helpful streams that the services expose:
+```typescript
+export default class ChatNavBar  {
+  unreadMessagesCount: number;
 
-For example, the `MessagesService` exposes the `messages` stream which is a stream of _the list of the all current messages_. That is, `messages` emits an array for each record.
+  constructor(@Inject(AppStore) private store: Store<AppState>) {
+    store.subscribe(() => this.updateState());
+    this.updateState();
+  }
 
-Similarly, the `ThreadsService` exposes a list of the chronologically-ordered threads in `orderedThreads` and so on.
+  updateState() {
+    // getUnreadMessagesCount is a selector function
+    this.unreadMessagesCount = getUnreadMessagesCount(this.store.getState());
+  }
+}
+```
 
-Understanding how RxJS streams can be tricky, but this code is heavily commented. One strategy to grokking this code is to start at the components and see how they use the services. The other strategy is to get a copy of [ng-book 2](https://ng-book.com/2) where we explain each line in detail over ~60 pages.
+You can see that in the constructor we inject our `Store` (which is typed to `AppState`). We immediately subscribe to any changes in the store. This callback will not be called unless an action is dispatched to the store, so we need to make sure we load the initial data. To do this, we call `this.updateState()` one time after the subscription.
+
+`updateState` reads the state from the store (`this.store.getState()`) and then calls the _selector function_ `getUnreadMessagesCount` (you can [find the implementation of that here](app/ts/reducers/ThreadsReducer.ts#L138)). `getUnreadMessagesCount` calculates the number of unread messages. We then take that value and set it to `this.unreadMessagesCount`. Because `unreadMessagesCount` is an instance variable which appears in the template, Angular will rerender this component when the value changes.
+
+This pattern is used throughout the app. 
+
+Understanding how everything fits together with Redux can be tricky, but this code is heavily commented. One strategy to understand this code is to start at the components and see how they read the Store with selectors, dispatch actions, and follow that through the reducers. The other strategy is to get a copy of [ng-book 2](https://ng-book.com/2) where we explain each line in detail over ~60 pages.
+
+## State
+
+The top-level state has two keys: `users` and `threads`: 
+
+```typescript
+interface AppState {
+  users: UsersState;
+  threads: ThreadsState;
+}
+
+interface UsersState {
+  currentUser: User;
+};
+
+export interface ThreadsEntities {
+  [id: string]: Thread;
+}
+
+export interface ThreadsState {
+  ids: string[];
+  entities: ThreadsEntities;
+  currentThreadId?: string;
+};
+```
+
+ThreadsState stores the list of Threads indexed by id in `entities`, as well as a complete list of the ids in `ids`.
+
+We also store the id of the current thread so that we know what the user is currently looking at - this is valuable for the unread messages count, for instance.
+
+In this app, we store the Messages in their respective Thread and we don't store the Messages apart from that Thread. In your app you may find it useful to separate Messages into their own Messages reducer and keep only a list of Message ids in your Threads.
+ 
+Here's a screenshot using [Redux Devtools](https://github.com/gaearon/redux-devtools) of the initial state:
+
+<p align="center">
+  <img src="app/images/readme/redux-chat-initial-state.png" alt="Angular 2 Redux Chat State Tree" width="800" />
+</p>
+
 
 ## Bots
 
@@ -87,7 +144,7 @@ This app implements a few simple chat bots. For instance:
 * Reversing bot
 * Waiting bot
 
-<img src="app/images/readme/rx-chat-echo-bot.png" alt="Angular 2 RxJS Chat Bots" width="346" height="348"/>
+<img src="app/images/readme/redux-chat-echo-bot.png" alt="Angular 2 Redux Chat Bots" width="346" height="348"/>
 
 <div style="clear:both"></div>
 
@@ -96,53 +153,85 @@ This app implements a few simple chat bots. For instance:
 Here's an overview of how the files are laid out in this project:
 
 ```
-angular2-rxjs-chat/
+angular2-redux-chat
 ├── Makefile                        * Easy access to common tasks
 ├── README.md                       * This file
 ├── app/                            * Where our application code is stored
 │   ├── css/                        * Contains our CSS and SCSS files
 |   | 
-│   ├── images/                     * Stores app images
+│   ├── images/                     * App Images
 |   | 
 │   ├── index.html                  * HTML entry point
 |   | 
-│   ├── ts/                         * All of our TypeScript is here
-|   |   |
-│   │   ├── ChatExampleData.ts      * Contains our bots and sample data
-|   |   |
-│   │   ├── app.ts                  * App entry point
-|   |   |
-│   │   ├── components/             * Components go here
-|   |   |   |
-│   │   │   ├── ChatNavBar.ts       * Nav Bar Component
-│   │   │   ├── ChatThreads.ts      * Threads Component
-│   │   │   └── ChatWindow.ts       * Chat Window Component
-|   |   |
-│   │   ├── models.ts               * Our models go here
-|   |   |
-│   │   ├── services/               * Services here
-|   |   |   |
-│   │   │   ├── MessagesService.ts  * Manages our messages
-│   │   │   ├── ThreadsService.ts   * Exposes our threads
-│   │   │   ├── UserService.ts      * Manage our user
-│   │   │   └── services.ts         * Exports all services
-|   |   |
-│   │   └── util/                   * Pipes and various utilities
-|   | 
-│   ├── typings/                    * Self-managed type definitions here
-|   | 
-│   └── vendor.js                   * Vendor js requires for webpack
-|   | 
-├── karma.conf.js                   * Our unit testing configuration
-├── package.json                    * Our javascript dependencies
-├── test/                           * Our tests go here
-├── test.bundle.js                  * Some hacks to get TypeScript tests
-├── tsconfig.json                   * Configures the TypeScript compiler
-├── tsd.json                        * Configures tsd (type definitions packages)
-├── tslint.json                     * Configures our TypeScript linter 
-├── typings/                        * tsd managed typings
-├── vendor/                         * Various vendored code
-└── webpack.config.js               * Our Webpack configuration
+│   └── ts/                         * All of our TypeScript is here
+│       │
+│       ├── ChatExampleData.ts      * Contains our bots and sample data
+|       |
+│       ├── actions/                * Our Redux actions
+│       │   ├── ThreadActions.ts    * Actions for Threads
+│       │   ├── UserActions.ts      * Actions for Users
+│       │   └── index.ts            
+|       |
+│       ├── app-store.ts            * A token for DI of the Store
+│       ├── app.ts                  * App entry point
+|       |
+│       ├── components/             * Pure Components go here
+│       │   ├── ChatMessage.ts      * Shows a single Message
+│       │   └── ChatThread.ts       * Shows a single Thread
+|       |
+│       ├── containers/             * Containers that access the Store here
+│       │   ├── ChatNavBar.ts       * The nav bar
+│       │   ├── ChatThreads.ts      * The list of threads
+│       │   └── ChatWindow.ts       * The window where we chat
+|       |
+│       ├── models/                 * Models here
+│       │   ├── Message.ts          * Message model
+│       │   ├── Thread.ts           * Thread model
+│       │   ├── User.ts             * User model
+│       │   └── index.ts
+|       |
+│       ├── pages/                  * Pages of the app here
+│       │   └── ChatPage.ts         * The main chat page
+|       |
+│       ├── pipes/                  * Our pipes here
+│       │   └── FromNowPipe.ts      * 'n minutes ago' pipe
+|       |
+│       ├── reducers/               * Redux reducers
+│       │   ├── ThreadsReducer.ts   * Manages thread state
+│       │   ├── UsersReducer.ts     * Manages users state
+│       │   └── index.ts
+|       |
+│       ├── util/                   * Utility functions
+│       │   └── uuid.ts
+│       └── vendor.ts               * Dependencies loaded here
+| 
+├── karma.conf.js                   * Test configuration
+| 
+├── minimal/                        * A minimal counter app w/ Redux/ng2
+│   ├── CounterComponent.ts
+│   ├── app-state.ts
+│   ├── app-store.ts
+│   ├── app.ts
+│   ├── counter-action-creators.ts
+│   ├── counter-reducer.ts
+│   ├── index.html
+│   └── tutorial/                   * Tutorial to build a store
+│       ├── 01-identity-reducer.ts
+│       ├── 02-adjusting-reducer.ts
+│       ├── 03-adjusting-reducer-switch.ts
+│       ├── 04-plus-action.ts
+│       ├── 05-minimal-store.ts
+│       ├── 06-rx-store.ts
+│       ├── redux2.ts
+│       └── tsconfig.json
+├── package.json                    * npm dependencies
+├── test/                           * tests go here
+├── test.bundle.js                  * webpack test loader
+├── tsconfig.json                   * compiler configuration
+├── tslint.json                     * code standards configuration
+├── typings/                        * TypeScript typings definitions
+├── typings.json                    * typings configuration
+└── webpack.config.js               * Webpack configuration
 ```
 
 ## Detailed Installation
@@ -178,19 +267,21 @@ You can run the unit tests with:
 npm run test
 ```
 
-## Future Plans
+## Build Redux in TypeScript Tutorial
 
-There are two big changes we plan to make to this repo:
+This repository contains a step-by-step tutorial on how to build a minimal-redux store in Typescript. You can read a [blog post explaining this code here](#). You can also find the code in [`minimal/tutorial`](minimal/tutorial). The final result looks like this (with or without Observables):
 
-### 1. Add HTTP Requests
+<p align="center">
+  <img src="app/images/readme/minimal-redux-ts.png" alt="Minimal Redux in TypeScript" width="800"/>
+</p>
 
-Currently the bots are all client-side and there are no HTTP requests involved in the chats. 
+## Minimal Angular 2 Redux Integration
 
-We will move the chat bots to a server and integrate API requests into this project once the Angular 2 HTTP client development has settled down.
+This repository also contains an example of a minimal integration of Redux with Angular 2 to build a counter app. You can also read about how to build this project [here at the ng-book blog](#).
 
-### 2. `ON_PUSH` change detection
-
-Because we're using observables, we can improve the performance of these components by using `ON_PUSH` change detection. Again, once Angular 2 development stabilizes, we'll be making this change.
+<p align="center">
+  <img src="app/images/readme/working-counter-app.png" alt="Minimal Redux and Angular 2 Counter" width="800"/>
+</p>
 
 ## Contributing
 
@@ -198,13 +289,12 @@ There are lots of other little things that need cleaned up such as:
 
 - More tests
 - Cleaning up the vendor scripts / typings
-- Simplifying the unread messages count
 
 If you'd like to contribute, feel free to submit a pull request and we'll likely merge it in.
 
 ## Getting Help
 
-If you're having trouble getting this project running, feel free to [open an issue](https://github.com/ng-book/angular2-rxjs-chat/issues), join us on [Gitter](https://gitter.im/ng-book/ng-book?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge), or [email us](mailto:us@fullstack.io)!
+If you're having trouble getting this project running, feel free to [open an issue](https://github.com/ng-book/angular2-redux-chat/issues), join us on [Gitter](https://gitter.im/ng-book/ng-book?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge), or [email us](mailto:us@fullstack.io)!
 
 ___
 
@@ -222,5 +312,6 @@ This app is only one of several apps we have in the book. If you're looking to l
 
 ## License
  [MIT](/LICENSE.md)
+
 
 

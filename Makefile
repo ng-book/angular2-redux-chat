@@ -8,4 +8,4 @@ test:
 	karma start
 
 tree:
-	cd .. && tree -I node_modules -A -F angular2-rxjs-chat
+	cd .. && tree -I node_modules -A -F angular2-redux-chat

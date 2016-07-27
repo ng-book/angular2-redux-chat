@@ -1,3 +1,0 @@
-* mention normalizr
-* can we get rid of users reducer and state?
-* https://tonyhb.gitbooks.io/redux-without-profanity/content/hard_and_fast_rules_for_apps.html
