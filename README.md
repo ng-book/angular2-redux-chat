@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="app/images/logos/Angular2ReduxChatHeaderImage.png" alt="Angular 2 Redux Chat" width="500" height="300"/>
+  <img src="app/images/logos/Angular2ReduxChatHeaderImage.png" alt="Angular 2 Redux Chat" width="810" height="350"/>
 </p>
 
 # Angular 2 Redux Chat [![Join the chat at https://gitter.im/ng-book/ng-book](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ng-book/ng-book?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -17,11 +17,12 @@ This repo shows an example chat application using Redux and Angular 2. The goal 
 * How to compose reducers
 * And much more
 
+> ### Try the live [demo here](http://redux-chat.ng-book.com)
+
 <p align="center">
-  <img src="app/images/readme/full-chat-preview.png" alt="Angular 2 Redux Chat" width="800" height="577"/>
+  <img src="app/images/readme/full-chat-preview.png" alt="Angular 2 Redux Chat" width="810" height="405"/>
 </p>
 
-> Try the live [demo here](http://redux-chat.ng-book.com)
 
 ## Quick start
 
@@ -282,6 +283,12 @@ This repository also contains an example of a minimal integration of Redux with 
 <p align="center">
   <img src="app/images/readme/working-counter-app.png" alt="Minimal Redux and Angular 2 Counter" width="800"/>
 </p>
+
+## Series
+
+This repo is part of a series of projects that discuss data architecture with Angular 2. You can find this same project implemented with Observable streams instead of Redux here:
+
+* [`angular2-rxjs-chat`](https://github.com/ng-book/angular2-rxjs-chat)
 
 ## Contributing
 
