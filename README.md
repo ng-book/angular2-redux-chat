@@ -20,7 +20,7 @@ This repo shows an example chat application using Redux and Angular 2. The goal 
 > ### Try the live [demo here](http://redux-chat.ng-book.com)
 
 <p align="center">
-  <img src="app/images/readme/full-chat-preview.png" alt="Angular 2 Redux Chat" width="810" height="405"/>
+  <img src="app/images/readme/full-chat-preview.png" alt="Angular 2 Redux Chat" width="800" height="577"/>
 </p>
 
 
