@@ -30,7 +30,6 @@ import ChatThread from '../components/ChatThread';
  */
 @Component({
   selector: 'chat-threads',
-  directives: [ ChatThread ],
   template: `
   <!-- conversations -->
   <div class="row">

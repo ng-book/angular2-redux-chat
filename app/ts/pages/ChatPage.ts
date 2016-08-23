@@ -17,11 +17,6 @@ import ChatWindow from '../containers/ChatWindow';
  */
 @Component({
   selector: 'chat-page',
-  directives: [
-    ChatNavBar,
-    ChatThreads,
-    ChatWindow
-  ],
   template: `
   <div>
     <chat-nav-bar></chat-nav-bar>

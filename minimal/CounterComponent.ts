@@ -16,7 +16,6 @@ import * as CounterActions from './counter-action-creators';
 
 @Component({
   selector: 'counter-component',
-  directives: [],
   template: `
     <div class="row">
       <div class="col-sm-6 col-md-4">

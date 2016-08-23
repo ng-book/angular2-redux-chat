@@ -34,7 +34,6 @@ let store: Store<AppState> = createStore<AppState>(
 
 @Component({
   selector: 'minimal-redux-app',
-  directives: [ CounterComponent ],
   template: `
   <div>
     <counter-component>
@@ -46,7 +45,10 @@ class CounterApp {
 }
 
 @NgModule({
-  declarations: [ CounterApp ],
+  declarations: [
+    CounterApp,
+    CounterComponent
+  ],
   imports: [ BrowserModule ],
   bootstrap: [ CounterApp ],
   providers: [

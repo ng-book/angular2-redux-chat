@@ -25,7 +25,14 @@ import {
   AppState,
   default as reducer
 } from './reducers';
+
 import ChatPage from './pages/ChatPage';
+import ChatThreads from './containers/ChatThreads';
+import ChatNavBar from './containers/ChatNavBar';
+import ChatWindow from './containers/ChatWindow';
+import ChatThread from './components/ChatThread';
+import ChatMessage from './components/ChatMessage';
+
 import ChatExampleData from './ChatExampleData';
 import {
   FormsModule,
@@ -37,7 +44,6 @@ require('../css/styles.scss');
 
 @Component({
   selector: 'chat-app',
-  directives: [ ChatPage ],
   template: `
   <div>
     <chat-page></chat-page>
@@ -60,7 +66,15 @@ let store: Store<AppState> = createStore<AppState>(
 );
 
 @NgModule({
-  declarations: [ ChatApp ],
+  declarations: [
+    ChatApp,
+    ChatPage,
+    ChatThreads,
+    ChatNavBar,
+    ChatWindow,
+    ChatThread,
+    ChatMessage
+  ],
   imports: [
     BrowserModule,
     FormsModule
