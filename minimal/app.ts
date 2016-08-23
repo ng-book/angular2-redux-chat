@@ -10,16 +10,17 @@ import {
   Component,
   provide
 } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import {
   createStore,
   Store,
-  compose,
   StoreEnhancer
 } from 'redux';
-import { AppStore } from './app-store';
-import { AppState } from './app-state';
 import { counterReducer } from './counter-reducer';
+import { AppState } from './app-state';
+import { AppStore } from './app-store';
 import CounterComponent from './CounterComponent';
 
 let devtools: StoreEnhancer<AppState> =
@@ -28,7 +29,7 @@ let devtools: StoreEnhancer<AppState> =
 
 let store: Store<AppState> = createStore<AppState>(
   counterReducer,
-  compose(devtools)
+  devtools
 );
 
 @Component({
@@ -41,13 +42,21 @@ let store: Store<AppState> = createStore<AppState>(
   </div>
   `
 })
-class MinimalApp {
+class CounterApp {
 }
 
-bootstrap(MinimalApp, [
-  provide(AppStore, { useFactory: () => store }),
-])
-.catch(err => console.error(err));
+@NgModule({
+  declarations: [ CounterApp ],
+  imports: [ BrowserModule ],
+  bootstrap: [ CounterApp ],
+  providers: [
+    provide(AppStore, { useValue: store })
+  ]
+})
+class CounterAppAppModule {}
+
+platformBrowserDynamic().bootstrapModule(CounterAppAppModule)
+  .catch(err => console.error(err));
 
 // --------------------
 // You can ignore these 'require' statements. The code will work without them.

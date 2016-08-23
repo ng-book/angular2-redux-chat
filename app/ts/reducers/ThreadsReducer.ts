@@ -51,7 +51,7 @@ const initialState: ThreadsState = {
  * particular action.
  */
 export const ThreadsReducer =
-  function(state = initialState, action: Action): ThreadsState {
+  function(state: ThreadsState = initialState, action: Action): ThreadsState {
   switch (action.type) {
 
     // Adds a new Thread to the list of entities
@@ -74,7 +74,7 @@ export const ThreadsReducer =
     // Adds a new Message to a particular Thread
     case ThreadActions.ADD_MESSAGE: {
       const thread = (<ThreadActions.AddMessageAction>action).thread;
-      const message = (<ThreadActions.AddMessageAction>action).messageArgs;
+      const message = (<ThreadActions.AddMessageAction>action).message;
 
       // special case: if the message being added is in the current thread, then
       // mark it as read
@@ -82,14 +82,17 @@ export const ThreadsReducer =
                       true : message.isRead;
       const newMessage = Object.assign({}, message, { isRead: isRead });
 
+      // grab the old thraed from entities
       const oldThread = state.entities[thread.id];
+
+      // create a new thread which has our newMessage
       const newThread = Object.assign({}, oldThread, {
         messages: [...oldThread.messages, newMessage]
       });
 
       return {
-        ids: state.ids,
-        currentThreadId: state.currentThreadId,
+        ids: state.ids, // unchanged
+        currentThreadId: state.currentThreadId, // unchanged
         entities: Object.assign({}, state.entities, {
           [thread.id]: newThread
         })
@@ -147,15 +150,6 @@ export const getUnreadMessagesCount = createSelector(
         return unreadCount;
       },
       0));
-
-// This selector will fetch a particular Thread by id
-export const getThread = createSelector(
-  getThreadsEntities,
-  ( state, props ) => {
-    console.log('props', props);
-    return '1';
-  },
-  ( entities: ThreadsEntities, id: string ) => entities[id] );
 
 // This selector emits the current thread
 export const getCurrentThread = createSelector(

@@ -81,12 +81,11 @@ import ChatMessage from '../components/ChatMessage';
 })
 export default class ChatWindow {
   currentThread: Thread;
-  draftMessage: {text: string};
+  draftMessage: { text: string };
   currentUser: User;
 
   constructor(@Inject(AppStore) private store: Store<AppState>,
               private el: ElementRef) {
-
     store.subscribe(() => this.updateState() );
     this.updateState();
     this.draftMessage = { text: '' };
@@ -99,9 +98,12 @@ export default class ChatWindow {
     this.scrollToBottom();
   }
 
-  onEnter(event: any): void {
-    this.sendMessage();
-    event.preventDefault();
+  scrollToBottom(): void {
+    let scrollPane: any = this.el
+      .nativeElement.querySelector('.msg-container-base');
+    if (scrollPane) {
+      setTimeout(() => scrollPane.scrollTop = scrollPane.scrollHeight);
+    }
   }
 
   sendMessage(): void {
@@ -116,11 +118,9 @@ export default class ChatWindow {
     this.draftMessage = { text: '' };
   }
 
-  scrollToBottom(): void {
-    let scrollPane: any = this.el
-      .nativeElement.querySelector('.msg-container-base');
-    if (scrollPane) {
-      setTimeout(() => scrollPane.scrollTop = scrollPane.scrollHeight);
-    }
+  onEnter(event: any): void {
+    this.sendMessage();
+    event.preventDefault();
   }
+
 }

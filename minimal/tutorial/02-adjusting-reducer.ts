@@ -7,7 +7,7 @@ interface Reducer<T> {
   (state: T, action: Action): T;
 }
 
-let reducer: Reducer<any> = (state: any, action: Action) => {
+let reducer: Reducer<number> = (state: number, action: Action) => {
   if (action.type === 'INCREMENT') {
     return state + 1;
   }
@@ -19,9 +19,9 @@ let reducer: Reducer<any> = (state: any, action: Action) => {
 
 let incrementAction: Action = { type: 'INCREMENT' };
 
-console.log(reducer(0, incrementAction)); // -> 1
-console.log(reducer(1, incrementAction)); // -> 2
+console.log( reducer(0, incrementAction )); // -> 1
+console.log( reducer(1, incrementAction )); // -> 2
 
 let decrementAction: Action = { type: 'DECREMENT' };
 
-console.log(reducer(100, decrementAction)); // -> 99
+console.log( reducer(100, decrementAction )); // -> 99

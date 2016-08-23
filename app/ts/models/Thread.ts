@@ -8,7 +8,6 @@
 
 import { Message } from './Message';
 
-
 /**
  * Thread represents a group of Users exchanging Messages
  */

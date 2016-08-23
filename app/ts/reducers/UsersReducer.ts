@@ -24,7 +24,7 @@ const initialState: UsersState = {
 };
 
 export const UsersReducer =
-  function(state = initialState, action: Action): UsersState {
+  function(state: UsersState = initialState, action: Action): UsersState {
   switch (action.type) {
     case UserActions.SET_CURRENT_USER:
     const user: User = (<UserActions.SetCurrentUserAction>action).user;

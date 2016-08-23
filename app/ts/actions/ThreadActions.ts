@@ -13,6 +13,7 @@ import {
 import { uuid } from '../util/uuid';
 import {
   User,
+  Message,
   Thread
 } from '../models';
 
@@ -31,33 +32,24 @@ export const addThread: ActionCreator<AddThreadAction> =
   });
 
 export const ADD_MESSAGE = '[Thread] Add Message';
-interface AddMessageArgs {
-  id?: string;
-  sentAt?: Date;
-  isRead?: boolean;
-  thread?: Thread;
-  author: User;
-  text: string;
-}
 export interface AddMessageAction extends Action {
   thread: Thread;
-  messageArgs: AddMessageArgs;
+  message: Message;
 }
 export const addMessage: ActionCreator<AddMessageAction> =
-  (thread: Thread, messageArgs: AddMessageArgs): AddMessageAction => {
+  (thread: Thread, messageArgs: Message): AddMessageAction => {
     const defaults = {
       id: uuid(),
       sentAt: new Date(),
       isRead: false,
       thread: thread
     };
-    const message: AddMessageArgs = Object.assign({}, defaults, messageArgs);
+    const message: Message = Object.assign({}, defaults, messageArgs);
 
     return {
       type: ADD_MESSAGE,
       thread: thread,
-      messageArgs: message
-
+      message: message
     };
   };
 

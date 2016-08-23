@@ -11,7 +11,9 @@ import {
   Component,
   provide
 } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import {
   createStore,
   Store,
@@ -25,6 +27,12 @@ import {
 } from './reducers';
 import ChatPage from './pages/ChatPage';
 import ChatExampleData from './ChatExampleData';
+import {
+  FormsModule,
+  disableDeprecatedForms,
+  provideForms
+} from '@angular/forms';
+
 require('../css/styles.scss');
 
 @Component({
@@ -51,10 +59,23 @@ let store: Store<AppState> = createStore<AppState>(
   compose(devtools)
 );
 
-bootstrap(ChatApp, [
-  provide(AppStore, { useFactory: () => store }),
-])
-.catch(err => console.error(err));
+@NgModule({
+  declarations: [ ChatApp ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  bootstrap: [ ChatApp ],
+  providers: [
+    provide(AppStore, { useFactory: () => store }),
+    disableDeprecatedForms(),
+    provideForms()
+  ]
+})
+class ChatAppModule {}
+
+platformBrowserDynamic().bootstrapModule(ChatAppModule)
+  .catch(err => console.error(err));
 
 // --------------------
 // You can ignore these 'require' statements. The code will work without them.

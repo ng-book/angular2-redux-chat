@@ -9,12 +9,7 @@ import {
   Component,
   Inject
 } from '@angular/core';
-import {
-  createStore,
-  Store,
-  compose,
-  StoreEnhancer
-} from 'redux';
+import { Store } from 'redux';
 import { AppStore } from './app-store';
 import { AppState } from './app-state';
 import * as CounterActions from './counter-action-creators';
@@ -37,9 +32,13 @@ import * as CounterActions from './counter-action-creators';
 
             <p>
               <button (click)="increment()"
-                      class="btn btn-primary">Increment</button>
+                      class="btn btn-primary">
+                Increment
+              </button>
               <button (click)="decrement()"
-                      class="btn btn-default" role="button">Decrement</button>
+                      class="btn btn-default">
+                 Decrement
+              </button>
             </p>
           </div>
         </div>

@@ -1,10 +1,3 @@
-import {
-  it,
-  describe,
-  expect,
-  beforeEachProviders
-} from '@angular/core/testing';
-
 import {Calculator} from 'calculator';
 
 describe('Hello', () => {
