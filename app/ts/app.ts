@@ -8,12 +8,12 @@
 
 import {
   Inject,
-  Component,
-  provide
+  Component
 } from '@angular/core';
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { FormsModule } from '@angular/forms';
 import {
   createStore,
   Store,
@@ -32,14 +32,9 @@ import ChatNavBar from './containers/ChatNavBar';
 import ChatWindow from './containers/ChatWindow';
 import ChatThread from './components/ChatThread';
 import ChatMessage from './components/ChatMessage';
+import { FromNowPipe } from './pipes/FromNowPipe';
 
 import ChatExampleData from './ChatExampleData';
-import {
-  FormsModule,
-  disableDeprecatedForms,
-  provideForms
-} from '@angular/forms';
-
 require('../css/styles.scss');
 
 @Component({
@@ -73,7 +68,8 @@ let store: Store<AppState> = createStore<AppState>(
     ChatNavBar,
     ChatWindow,
     ChatThread,
-    ChatMessage
+    ChatMessage,
+    FromNowPipe
   ],
   imports: [
     BrowserModule,
@@ -81,9 +77,7 @@ let store: Store<AppState> = createStore<AppState>(
   ],
   bootstrap: [ ChatApp ],
   providers: [
-    provide(AppStore, { useFactory: () => store }),
-    disableDeprecatedForms(),
-    provideForms()
+    { provide: AppStore, useFactory: () => store }
   ]
 })
 class ChatAppModule {}

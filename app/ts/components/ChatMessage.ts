@@ -11,7 +11,6 @@ import {
   OnInit
 } from '@angular/core';
 import { Message } from '../models';
-import { FromNowPipe } from '../pipes/FromNowPipe';
 
 /**
  * ChatMessage is a component that shows a single Message in the ChatWindow.
@@ -21,7 +20,6 @@ import { FromNowPipe } from '../pipes/FromNowPipe';
  @Component({
   inputs: ['message'],
   selector: 'chat-message',
-  pipes: [FromNowPipe],
   template: `
   <div class="msg-container"
        [ngClass]="{'base-sent': !incoming, 'base-receive': incoming}">
@@ -34,7 +32,7 @@ import { FromNowPipe } from '../pipes/FromNowPipe';
     <div class="messages"
       [ngClass]="{'msg-sent': !incoming, 'msg-receive': incoming}">
       <p>{{message.text}}</p>
-      <time>{{message.sender}} • {{message.sentAt | fromNow}}</time>
+      <p class="time">{{message.sender}} • {{message.sentAt | fromNow}}</p>
     </div>
 
     <div class="avatar"

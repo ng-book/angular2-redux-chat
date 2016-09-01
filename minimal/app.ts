@@ -7,8 +7,7 @@
  */
 
 import {
-  Component,
-  provide
+  Component
 } from '@angular/core';
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
@@ -52,8 +51,9 @@ class CounterApp {
   imports: [ BrowserModule ],
   bootstrap: [ CounterApp ],
   providers: [
-    provide(AppStore, { useValue: store })
+    {provide: AppStore, useValue: store }
   ]
+
 })
 class CounterAppAppModule {}
 

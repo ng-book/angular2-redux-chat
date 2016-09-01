@@ -7,8 +7,7 @@
  */
 
 import {
-  Pipe,
-  bind
+  Pipe
 } from '@angular/core';
 import * as moment from 'moment';
 
@@ -26,5 +25,5 @@ export class FromNowPipe {
 }
 
 export var fromNowPipeInjectables: Array<any> = [
-  bind(FromNowPipe).toValue(FromNowPipe)
+  FromNowPipe
 ];
