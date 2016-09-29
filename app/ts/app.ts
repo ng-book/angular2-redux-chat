@@ -35,7 +35,7 @@ import ChatMessage from './components/ChatMessage';
 import { FromNowPipe } from './pipes/FromNowPipe';
 
 import ChatExampleData from './ChatExampleData';
-require('../css/styles.scss');
+require('../css/styles.css');
 
 @Component({
   selector: 'chat-app',
