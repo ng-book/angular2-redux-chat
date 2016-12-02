@@ -4,7 +4,7 @@
   "description": "Chat App with Angular 2 and RxJS",
   "main": "index.js",
   "scripts": {
-    "go": "./node_modules/.bin/webpack-dev-server --display-reasons --display-chunks",
+    "go": "./node_modules/.bin/webpack-dev-server --display-reasons --display-chunks --open",
     "clean": "true",
     "test": "karma start"
   },
@@ -75,7 +75,7 @@
     "url-loader": "0.5.6",
     "val-loader": "0.5.0",
     "webpack": "1.12.9",
-    "webpack-dev-server": "1.12.1",
+    "webpack-dev-server": "1.16.2 ",
     "webpack-notifier": "1.2.1",
     "webpack-reload-plugin": "0.1.2"
   }
