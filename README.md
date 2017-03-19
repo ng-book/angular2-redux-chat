@@ -28,19 +28,19 @@ This repo shows an example chat application using Redux and Angular 2. The goal 
 
 ```bash
 # clone the repo
-git clone https://github.com/ng-book/angular2-redux-chat.git 
+git clone https://github.com/ng-book/angular2-redux-chat.git
 
 # change into the repo directory
 cd angular2-redux-chat
 
-# install 
+# install
 npm install
 
 # run
-npm run go
+npm start
 ```
 
-Then visit [http://localhost:8080](http://localhost:8080) in your browser. 
+Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## Architecture
 
@@ -62,7 +62,7 @@ There are two reducers:
 There are also three top-level components:
 
 * [`ChatNavBar`](app/ts/components/ChatNavBar.ts) - for the top navigation bar and unread messages count
-* [`ChatThreads`](app/ts/components/ChatThreads.ts) - for our clickable list of threads 
+* [`ChatThreads`](app/ts/components/ChatThreads.ts) - for our clickable list of threads
 * [`ChatWindow`](app/ts/components/ChatWindow.ts) - where we hold our current conversation
 
 <p align="center">
@@ -95,13 +95,13 @@ You can see that in the constructor we inject our `Store` (which is typed to `Ap
 
 `updateState` reads the state from the store (`this.store.getState()`) and then calls the _selector function_ `getUnreadMessagesCount` (you can [find the implementation of that here](app/ts/reducers/ThreadsReducer.ts#L138)). `getUnreadMessagesCount` calculates the number of unread messages. We then take that value and set it to `this.unreadMessagesCount`. Because `unreadMessagesCount` is an instance variable which appears in the template, Angular will rerender this component when the value changes.
 
-This pattern is used throughout the app. 
+This pattern is used throughout the app.
 
 Understanding how everything fits together with Redux can be tricky, but this code is heavily commented. One strategy to understand this code is to start at the components and see how they read the Store with selectors, dispatch actions, and follow that through the reducers. The other strategy is to get a copy of [ng-book 2](https://ng-book.com/2) where we explain each line in detail over ~60 pages.
 
 ## State
 
-The top-level state has two keys: `users` and `threads`: 
+The top-level state has two keys: `users` and `threads`:
 
 ```typescript
 interface AppState {
@@ -129,7 +129,7 @@ ThreadsState stores the list of Threads indexed by id in `entities`, as well as 
 We also store the id of the current thread so that we know what the user is currently looking at - this is valuable for the unread messages count, for instance.
 
 In this app, we store the Messages in their respective Thread and we don't store the Messages apart from that Thread. In your app you may find it useful to separate Messages into their own Messages reducer and keep only a list of Message ids in your Threads.
- 
+
 Here's a screenshot using [Redux Devtools](https://github.com/gaearon/redux-devtools) of the initial state:
 
 <p align="center">
@@ -159,11 +159,11 @@ angular2-redux-chat
 ├── README.md                       * This file
 ├── app/                            * Where our application code is stored
 │   ├── css/                        * Contains our CSS and SCSS files
-|   | 
+|   |
 │   ├── images/                     * App Images
-|   | 
+|   |
 │   ├── index.html                  * HTML entry point
-|   | 
+|   |
 │   └── ts/                         * All of our TypeScript is here
 │       │
 │       ├── ChatExampleData.ts      * Contains our bots and sample data
@@ -205,9 +205,9 @@ angular2-redux-chat
 │       ├── util/                   * Utility functions
 │       │   └── uuid.ts
 │       └── vendor.ts               * Dependencies loaded here
-| 
+|
 ├── karma.conf.js                   * Test configuration
-| 
+|
 ├── minimal/                        * A minimal counter app w/ Redux/ng2
 │   ├── CounterComponent.ts
 │   ├── app-state.ts
@@ -258,7 +258,7 @@ npm install
 npm run go
 ```
 
-Then visit [http://localhost:8080](http://localhost:8080) in your browser. 
+Then visit [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## Running the Tests
 
@@ -319,6 +319,3 @@ This app is only one of several apps we have in the book. If you're looking to l
 
 ## License
  [MIT](/LICENSE.md)
-
-
-

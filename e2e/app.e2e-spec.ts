@@ -1,11 +1,10 @@
-import { Angular2AppPage } from './app.po';
-import { browser } from 'protractor';
+import { AngularReduxChatPage } from './app.po';
 
-describe('ng-book redux-chat Example App', function() {
-  let page: Angular2AppPage;
+describe('angular-redux-chat App', () => {
+  let page: AngularReduxChatPage;
 
   beforeEach(() => {
-    page = new Angular2AppPage();
+    page = new AngularReduxChatPage();
   });
 
   it('should load the page', () => {
@@ -29,5 +28,4 @@ describe('ng-book redux-chat Example App', function() {
     // expect(page.unreadCount()).toMatch(`1`);
     expect(page.getConversationText(3)).toContain(`I waited 3 seconds`);
   });
-
 });
