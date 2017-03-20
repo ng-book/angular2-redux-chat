@@ -6,7 +6,7 @@
   "author": "Nate Murray <nate@fullstack.io>",
   "license": "MIT",
   "devDependencies": {
-    "ts-node": "0.9.3"
+    "ts-node": "2.1.0"
   },
   "dependencies": {
     "redux": "3.5.2"
