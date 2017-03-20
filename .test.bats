@@ -2,24 +2,41 @@
 DIR=$(dirname $BATS_TEST_FILENAME)
 
 load "${NGBOOK_ROOT}/scripts/bats/fullstack.bats"
-load '/usr/local/lib/bats-support/load.bash'
-load '/usr/local/lib/bats-assert/load.bash'
+load "${NGBOOK_ROOT}/scripts/bats-support/load.bash"
+load "${NGBOOK_ROOT}/scripts/bats-assert/load.bash"
 
-@test "angular2-redux-chat e2e tests pass" {
+# @test "forms unit tests pass" {
+#   cd $DIR
+#   run npm run test
+#   assert_output --partial 'SUCCESS'
+# }
+
+@test "angular-redux-chat e2e tests pass" {
   cd $DIR
-  run ./node_modules/.bin/protractor
+  run_ng_e2e $TEST_TMP_DIR
+  run cat ${TEST_TMP_DIR}/log.txt
   assert_output --partial 'SUCCESS'
 }
 
-setup() {
+@test "angular-redux-chat linting passes" {
   cd $DIR
-  kill_by_grep "webpack-dev-server"
-  npm run go 3>- &
+  run npm run lint
+  assert_output --partial 'All files pass linting'
+}
+
+setup() {
+  echo "travis_fold:start:angular-redux-chat"
+  cd $DIR
+  TEST_TMP_DIR="$(mktemp -d -t fullstackXXX)"
+  kill_ng_cli || :
+  kill_by_port 4200
   true
 }
 
 teardown() {
   cd $DIR
-  kill_by_grep "webpack-dev-server"
+  kill_ng_cli || :
+  kill_by_port 4200
+  echo "travis_fold:end:angular-redux-chat"
   true
 }
