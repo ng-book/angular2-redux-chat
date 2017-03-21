@@ -5,11 +5,11 @@ load "${NGBOOK_ROOT}/scripts/bats/fullstack.bats"
 load "${NGBOOK_ROOT}/scripts/bats-support/load.bash"
 load "${NGBOOK_ROOT}/scripts/bats-assert/load.bash"
 
-# @test "forms unit tests pass" {
-#   cd $DIR
-#   run npm run test
-#   assert_output --partial 'SUCCESS'
-# }
+@test "angular-redux-chat unit tests pass" {
+ cd $DIR
+ run npm run test
+ assert_output --partial 'SUCCESS'
+}
 
 @test "angular-redux-chat e2e tests pass" {
   cd $DIR
