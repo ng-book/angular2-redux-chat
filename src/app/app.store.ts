@@ -1,4 +1,4 @@
-import { OpaqueToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import {
   createStore,
   Store,
@@ -11,7 +11,7 @@ import {
   default as reducer
 } from './app.reducer';
 
-export const AppStore = new OpaqueToken('App.store');
+export const AppStore = new InjectionToken('App.store');
 
 const devtools: StoreEnhancer<AppState> =
   window['devToolsExtension'] ?
