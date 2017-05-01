@@ -4,7 +4,7 @@ import {
   Inject
 } from '@angular/core';
 import { AppStore } from '../app.store';
-import { Store } from 'redux';
+import * as Redux from 'redux';
 import {
   Thread
 } from '../thread/thread.model';
@@ -24,7 +24,7 @@ export class ChatThreadsComponent {
   threads: Thread[];
   currentThreadId: string;
 
-  constructor(@Inject(AppStore) private store: Store<AppState>) {
+  constructor(@Inject(AppStore) private store: Redux.Store<AppState>) {
     store.subscribe(() => this.updateState());
     this.updateState();
   }

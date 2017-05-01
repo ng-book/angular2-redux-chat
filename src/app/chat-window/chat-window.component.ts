@@ -3,7 +3,7 @@ import {
   Inject,
   ElementRef
 } from '@angular/core';
-import { Store } from 'redux';
+import * as Redux from 'redux';
 
 import { AppStore } from '../app.store';
 import { User } from '../user/user.model';
@@ -25,7 +25,7 @@ export class ChatWindowComponent {
   draftMessage: { text: string };
   currentUser: User;
 
-  constructor(@Inject(AppStore) private store: Store<AppState>,
+  constructor(@Inject(AppStore) private store: Redux.Store<AppState>,
               private el: ElementRef) {
     store.subscribe(() => this.updateState() );
     this.updateState();

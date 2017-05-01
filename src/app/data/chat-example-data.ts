@@ -1,4 +1,4 @@
-import { Store } from 'redux';
+import * as Redux from 'redux'
 import {
   AppState,
   getAllMessages
@@ -75,7 +75,7 @@ const tWait: Thread = {
   messages: []
 };
 
-export function ChatExampleData(store: Store<AppState>) {
+export function ChatExampleData(store: Redux.Store<AppState>) {
 
   // set the current User
   store.dispatch(UserActions.setCurrentUser(me));
