@@ -26,7 +26,7 @@ class Store<T> extends BehaviorSubject<T> {
       .scan(
         (state: T, action: Action) => this._reducer(state, action),
         initialState)
-      .subscribe((state) => super.next(state));
+      .subscribe((state) => super.emit(state));
   }
 
   getState(): T {
@@ -34,7 +34,7 @@ class Store<T> extends BehaviorSubject<T> {
   }
 
   dispatch(action: Action): void {
-    this._dispatcher.next(action);
+    this._dispatcher.emit(action);
   }
 }
 
